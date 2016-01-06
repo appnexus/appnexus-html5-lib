@@ -1,0 +1,32 @@
+{
+  "name": "appnexus-html5-lib",
+  "description": "AppNexus HTML5 library",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "author": {
+    "name": "Alejandro Gonzalez Sole",
+    "email": "jgonzalezsole@appnexus.com",
+    "url": "http://www.appnexus.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "install": "napa",
+    "build": "grunt build",
+    "test": "mocha --no-colors --reporter spec"
+  },
+  "napa": {
+    "ternarylabs-porthole": "git+https://github.com/ternarylabs/porthole.git#2d4e337"
+  },
+  "dependencies": {
+    "napa": "^2.2.0"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-clean": "^0.7.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "mocha": "*"
+  }
+}
