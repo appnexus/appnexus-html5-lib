@@ -1,7 +1,45 @@
 'use strict';
 
-var Porthole = require('ternarylabs-porthole/src/porthole.js');
+var Porthole = require('./lib/porthole');
+var host = require('./host');
 
-module.exports = {
+var APPNEXUS = {
+  debug: true,
+  placement: host.placement
+}
 
+var init = false;
+var clientPorthole;
+
+function initializeClient() {
+  clientPorthole = new Porthole.WindowProxy();
+}
+
+APPNEXUS.ready = function (callback, t) {
+  var checkReady = function (f){ /in/.test(document.readyState) ? setTimeout(function () { checkReady(f); } , 9) : f(); }
+  checkReady(function (){
+    if (!init) {
+      initializeClient();
+      init = true;
+    }
+    callback();
+  });
+}
+
+APPNEXUS.click = function () {
+  clientPorthole.post({ action: 'click' });
+}
+
+APPNEXUS.expand = function () {
+  clientPorthole.post({ action: 'expand' });
+}
+
+APPNEXUS.contract = function () {
+  clientPorthole.post({ action: 'contract' });
+}
+
+if (typeof window.exports !== 'undefined') {
+    window.exports.APPNEXUS = APPNEXUS;
+} else {
+    window.APPNEXUS = APPNEXUS;
 }

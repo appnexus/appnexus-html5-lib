@@ -10,16 +10,12 @@
   },
   "license": "MIT",
   "scripts": {
-    "install": "napa",
     "build": "grunt build",
+    "example": "node example/index.js",
+    "watch": "grunt watch",
     "test": "mocha --no-colors --reporter spec"
   },
-  "napa": {
-    "ternarylabs-porthole": "git+https://github.com/ternarylabs/porthole.git#2d4e337"
-  },
-  "dependencies": {
-    "napa": "^2.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "*",
     "grunt": "^0.4.5",
@@ -27,6 +23,7 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.7.0",
     "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
     "mocha": "*"
   }
 }
