@@ -4,8 +4,7 @@ var Porthole = require('./lib/porthole');
 var host = require('./host');
 
 var APPNEXUS = {
-  debug: true,
-  placement: host.placement
+  debug: true
 }
 
 var init = false;
@@ -30,13 +29,15 @@ APPNEXUS.click = function () {
   clientPorthole.post({ action: 'click' });
 }
 
-APPNEXUS.expand = function () {
-  clientPorthole.post({ action: 'expand' });
+APPNEXUS.expand = function (opts) {
+  clientPorthole.post({ action: 'expand', expand: opts });
 }
 
-APPNEXUS.contract = function () {
-  clientPorthole.post({ action: 'contract' });
+APPNEXUS.contract = function (opts) {
+  clientPorthole.post({ action: 'contract', contract: opts });
 }
+
+APPNEXUS.placement = host.placement(APPNEXUS)
 
 if (typeof window.exports !== 'undefined') {
     window.exports.APPNEXUS = APPNEXUS;

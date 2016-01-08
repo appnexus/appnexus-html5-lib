@@ -1,58 +1,57 @@
 'use strict';
 
 var guid = require('../lib/guid');
+var utils = require('../lib/utils');
 var Porthole = require('../lib/porthole');
 
-module.exports.placement = function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
-  var uid = guid();
-  var checkReady = function (f){ /in/.test(document.readyState) ? setTimeout(function () { checkReady(f); } , 9) : f(); }
+module.exports.placement = function (APPNEXUS) {
+  return function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
+    var uid = guid();
 
-  var deepExtend = function(out) {
-    out = out || {};
-    for (var i = 1; i < arguments.length; i++) {
-      var obj = arguments[i];
-      if (!obj) continue;
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          if (typeof obj[key] === 'object')
-            deepExtend(out[key], obj[key]);
-          else
-            out[key] = obj[key];
-        }
+    var windowProxy;
+    function onMessage(messageEvent) {
+      switch(messageEvent.data.action) {
+        case 'click':
+          window.open(landingPageURL);
+          break;
+        case 'expand':
+          var expand = messageEvent.data.expand;
+          var frame = document.getElementById('an-' + uid);
+          if (expand.easing || expand.duration) {
+            var cssTransition = utils.sprintf('width, height, %sms %s', parseInt(expand.duration || 0, 10), expand.easing);
+            frame.style['-webkit-transition'] = cssTransition;
+            frame.style['-moz-transition'] = cssTransition;
+            frame.style['-ms-transition'] = cssTransition;
+            frame.style['transition'] = cssTransition;
+          }
+          if (!isNaN(expand.height)) {
+            frame.style.height = expand.height + 'px';
+          }
+          if (!isNaN(expand.width)) {
+            frame.style.width = expand.width + 'px';
+          }
+          break;
+        case 'contract':
+          var contract = messageEvent.data.contract;
+          var frame = document.getElementById('an-' + uid);
+          if (contract.easing || contract.duration) {
+            var cssTransition = utils.sprintf('width, height, %sms %s', parseInt(contract.duration || 0, 10), contract.easing);
+            frame.style['-webkit-transition'] = cssTransition;
+            frame.style['-moz-transition'] = cssTransition;
+            frame.style['-ms-transition'] = cssTransition;
+            frame.style['transition'] = cssTransition;
+          }
+          frame.style.height = creativeHeight + 'px';
+          break;
       }
     }
-    return out;
-  };
 
-  var windowProxy;
-  function onMessage(messageEvent) {
-    switch(messageEvent.data.action) {
-      case 'click':
-        window.open(landingPageURL);
-        break;
-      case 'expand':
+    APPNEXUS.ready(function () {
+      windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
+      windowProxy.addEventListener(onMessage);
+    });
 
-        break;
-      case 'contract':
-        break;
-    }
-    console.log(messageEvent.data)
-    // var guestFrame = document.getElementById('guestFrame');
-    // if (messageEvent.origin == mediaURL.replace(/^(https?:\/\/[^/]+).*$/, '$1')) {
+    document.write('<iframe id="an-'+uid+'" name="an-'+uid+'" src="'+mediaURL+'" width="'+creativeWidth+'" height="'+creativeHeight+'" frameborder="0" scrolling="no" allowfullscreen="true" style="width: '+creativeWidth+'px; height: '+creativeHeight+'px; "></iframe>');
 
-    //   if (messageEvent.data) {
-    //     for (var key in messageEvent.data) {
-    //       guestFrame[key] = deepExtend(guestFrame[key], messageEvent.data[key]);
-    //     }
-    //   }
-    // }
   }
-
-  checkReady(function () {
-    windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
-    windowProxy.addEventListener(onMessage);
-  });
-
-  document.write('<iframe id="an-'+uid+'" name="guestFrame" src="'+mediaURL+'" width="'+creativeWidth+'" height="'+creativeHeight+'" frameborder="0" scrolling="no" allowfullscreen="true" style="width: '+creativeWidth+'px; height: '+creativeHeight+'px; position:absolute; "></iframe>');
-
 }
