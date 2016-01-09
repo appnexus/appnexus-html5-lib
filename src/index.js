@@ -1,46 +1,74 @@
 'use strict';
 
 var Porthole = require('./lib/porthole');
+var EventListener = require('./lib/event-listener');
 var host = require('./host');
 
-var APPNEXUS = {
-  debug: true
-}
+if (!window.APPNEXUS) {
 
-var init = false;
-var clientPorthole;
+  var APPNEXUS = {
+    debug: false,
+    inFrame: false,
+    EventListener: EventListener
+  }
 
-function initializeClient() {
-  clientPorthole = new Porthole.WindowProxy();
-}
+  var init = false;
+  var expandProperties = {}
+  var dispatcher = new EventListener();
+  var clientPorthole;
 
-APPNEXUS.ready = function (callback, t) {
+  try {
+    APPNEXUS.inFrame = (window.self !== window.top);
+  } catch (e) {
+    APPNEXUS.inFrame = true;
+  }
+
+  dispatcher.addEventListener('ready', function () {
+    clientPorthole = new Porthole.WindowProxy();
+    if (APPNEXUS.debug) console.info('Client initialized!');
+  });
+
   var checkReady = function (f){ /in/.test(document.readyState) ? setTimeout(function () { checkReady(f); } , 9) : f(); }
   checkReady(function (){
-    if (!init) {
-      initializeClient();
-      init = true;
-    }
-    callback();
+    host.ready();
+    dispatcher.dispatchEvent('ready');
   });
-}
 
-APPNEXUS.click = function () {
-  clientPorthole.post({ action: 'click' });
-}
+  APPNEXUS.ready = function (callback) {
+    if (!APPNEXUS.inFrame) APPNEXUS.debug = true;
+    dispatcher.addEventListener('ready', callback);
+  }
 
-APPNEXUS.expand = function (opts) {
-  clientPorthole.post({ action: 'expand', expand: opts });
-}
+  APPNEXUS.click = function () {
+    clientPorthole.post({ action: 'click' });
+    if (APPNEXUS.debug) console.info('Client send action: click');
+  }
 
-APPNEXUS.contract = function (opts) {
-  clientPorthole.post({ action: 'contract', contract: opts });
-}
+  APPNEXUS.setExpandProperties = function (props) {
+    expandProperties = props;
+    clientPorthole.post({ action: 'set-expand-properties', properties: props });
+    if (APPNEXUS.debug) console.info('Client send action: set-expand-properties');
+  }
 
-APPNEXUS.placement = host.placement(APPNEXUS)
+  APPNEXUS.getExpandProperties = function () {
+    return expandProperties;
+  }
+
+  APPNEXUS.expand = function (opts) {
+    clientPorthole.post({ action: 'expand', expand: opts });
+    if (APPNEXUS.debug) console.info('Client send action: expand');
+  }
+
+  APPNEXUS.collapse = function (opts) {
+    clientPorthole.post({ action: 'collapse', contract: opts });
+    if (APPNEXUS.debug) console.info('Client send action: collapse');
+  }
+
+  APPNEXUS.placement = host.placement(APPNEXUS);
+}
 
 if (typeof window.exports !== 'undefined') {
-    window.exports.APPNEXUS = APPNEXUS;
+    window.exports.APPNEXUS = APPNEXUS || window.APPNEXUS;
 } else {
-    window.APPNEXUS = APPNEXUS;
+    window.APPNEXUS = APPNEXUS || window.APPNEXUS;
 }

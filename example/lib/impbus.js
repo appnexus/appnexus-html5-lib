@@ -30,7 +30,7 @@ module.exports = function (adsBasePath) {
         if (loadedAds[queryParams.size][adId]) {
           var ad = loadedAds[queryParams.size][adId];
           var adSize = ad.size.split('x');
-          var clickTrack = 'http://' + request.headers.host + '/track?id=' + adId + '&r=' + ad['landing-page'];
+          var clickTrack = 'http://' + request.headers.host + '/track?id=' + adId + '&r=' + encodeURIComponent(ad['landing-page']);
           response.write(' \
 (function () { document.write(\' \
 <script type="text/javascript" src="http://' + domain + ':8889/js/appnexus-html5-lib.js"></script> \

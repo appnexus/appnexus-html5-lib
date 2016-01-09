@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>HTML5 Expanding 720x90</title>
+    <link rel="stylesheet" href="css/expand-style.css">
+    <script type="text/javascript" src="http://localhost:8889/js/appnexus-html5-lib.js"></script>
+    <script type="text/javascript" src="js/expand-code.js"></script>
+  </head>
+  <body>
+    <div id="expanding-div">
+      <div id="click-message">CLICK TO EXPAND</div>
+      <div id="click"></div>
+      <div id="video-holder">
+          <video id="video-player" poster="images/video_poster.jpg" controls="controls">
+            <!-- MP4 video file for Safari/iOS -->
+            <source src="media/sample-video.mp4" type='video/mp4' />
+            <!-- WEBM video for Chrome and Firefox 4+ -->
+            <source src="media/sample-video.webm" type='video/webm' />
+            <!-- Backup image for browsers that don't support the Video tag -->
+            <img src="images/video_poster.jpg" />
+          </video>
+      </div>
+      <img id="close-button" src="images/close-button.png" />
+      <img id="twitter-button" src="images/twitter-icon.png" />
+      <img id="facebook-button" src="images/facebook-icon.png" />
+    </div>
+  </body>
+</html>

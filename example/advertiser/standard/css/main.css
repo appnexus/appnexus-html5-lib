@@ -1,0 +1,137 @@
+/* GENERAL */
+/* Containing floats */
+/* Alignment */
+/* Zooms */
+/* Round corners */
+/* Shapes */
+/* Shadows */
+/* Gradients */
+/* Animations */
+/* line 5, ../sass/main.scss */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0px;
+}
+
+/* line 10, ../sass/main.scss */
+#container {
+  position: absolute;
+  display: block;
+  width: 300px;
+  height: 250px;
+  cursor: pointer;
+}
+/* line 17, ../sass/main.scss */
+#container #ad {
+  position: absolute;
+  width: 298px;
+  height: 248px;
+  border: #b42c31 1px solid;
+  overflow: hidden;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 32, ../sass/main.scss */
+#banner {
+  position: absolute;
+  display: block;
+  width: 298px;
+  height: 248px;
+  right: 0px;
+  background-color: #FFF;
+  overflow: hidden;
+}
+/* line 41, ../sass/main.scss */
+#banner .bg-collapse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url(../images/bg-collapse.jpg);
+  visibility: hidden;
+}
+/* line 49, ../sass/main.scss */
+#banner .bg-collapse .product-details {
+  position: absolute;
+  top: 76px;
+  left: 23px;
+  width: 154px;
+  height: 78px;
+  background-image: url(../images/product-details.png);
+}
+/* line 58, ../sass/main.scss */
+#banner .bg-collapse .cta {
+  position: absolute;
+  top: 164px;
+  left: 23px;
+  width: 92px;
+  height: 21px;
+  background-image: url(../images/cta.png);
+}
+/* line 67, ../sass/main.scss */
+#banner .bg-collapse .footer-text {
+  position: absolute;
+  top: 189px;
+  left: 24px;
+  width: 176px;
+  height: 22px;
+  background-image: url(../images/footer-text.png);
+}
+/* line 77, ../sass/main.scss */
+#banner .tree {
+  position: absolute;
+  width: 100%;
+  height: 235px;
+  background-image: url(../images/tree.jpg);
+}
+/* line 84, ../sass/main.scss */
+#banner .tree .text-1 {
+  position: absolute;
+  top: 91px;
+  left: 11px;
+  width: 201px;
+  height: 57px;
+  background-image: url(../images/text-1.png);
+  opacity: 0;
+}
+/* line 93, ../sass/main.scss */
+#banner .tree .text-2 {
+  position: absolute;
+  top: 93px;
+  width: 221px;
+  height: 50px;
+  background-image: url(../images/text-2.png);
+  opacity: 0;
+}
+/* line 103, ../sass/main.scss */
+#banner .footer-panel {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 60px;
+  background-image: url(../images/footer.png);
+}
+/* line 111, ../sass/main.scss */
+#banner #clickthrough {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 152, ../sass/main.scss */
+#panel {
+  position: absolute;
+  width: 498px;
+  height: 248px;
+  background-color: #FFF;
+  overflow: hidden;
+}
+/* line 159, ../sass/main.scss */
+#panel .video-container {
+  height: 135px;
+  position: absolute;
+  width: 240px;
+}

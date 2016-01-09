@@ -5,106 +5,187 @@ var guid = require('../lib/guid');
 var utils = require('../lib/utils');
 var Porthole = require('../lib/porthole');
 
+module.exports.ready = function () {};
 module.exports.placement = function (APPNEXUS) {
   return function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
     var uid = guid();
 
-    var windowProxy;
-    function onMessage(messageEvent) {
+    function overlayElement(el, z) {
+      el.style.top = el.style.left = el.style.right = el.style.bottom = 0;
+      el.style.width = el.style.height = '100%';
+      el.style.zIndex = z;
+      el.style.position = 'absolute';
+      return el;
+    }
+
+    function addCSSTranstions(el, cssTransition) {
+      el.style['-webkit-transition'] = cssTransition;
+      el.style['-moz-transition'] = cssTransition;
+      el.style['-ms-transition'] = cssTransition;
+      el.style['transition'] = cssTransition;
+    }
+
+    if (APPNEXUS.debug) console.log('Host placement created');
+
+    var expandProperties = {};
+    var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
+    windowProxy.addEventListener(function (messageEvent) {
+      var frame = document.getElementById('an-' + uid);
       switch(messageEvent.data.action) {
+
         case 'click':
           window.open(landingPageURL);
           break;
-        case 'expand':
-          var expand = messageEvent.data.expand;
-          var frame = document.getElementById('an-' + uid);
-          if (expand.easing || expand.duration) {
-            var cssTransition = utils.sprintf('width, height, %sms %s', parseInt(expand.duration || 0, 10), expand.easing);
-            frame.style['-webkit-transition'] = cssTransition;
-            frame.style['-moz-transition'] = cssTransition;
-            frame.style['-ms-transition'] = cssTransition;
-            frame.style['transition'] = cssTransition;
-          }
-          if (!isNaN(expand.height)) {
-            frame.style.height = expand.height + 'px';
-          }
-          if (!isNaN(expand.width)) {
-            frame.style.width = expand.width + 'px';
+
+        case 'set-expand-properties':
+          expandProperties = messageEvent.data.properties || {};
+          if (expandProperties.floating) {
+            frame.style.position = 'absolute';
           }
           break;
-        case 'contract':
-          var contract = messageEvent.data.contract;
+
+        case 'expand':
+          if (expandProperties.interstitial) {
+            frame.overlay = document.createElement('div');
+            frame.overlay.style.backgroundColor = expandProperties.overlayColor || 'rgba(0,0,0,0.5)';
+            document.body.appendChild(frame.overlay);
+            overlayElement(frame.overlay, 99999);
+            overlayElement(frame, 100000);
+          }
+
+          if (expandProperties.expand && (expandProperties.expand.easing || expandProperties.expand.duration)) {
+            addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 0, 10), expandProperties.expand.easing));
+          }
+          if (!isNaN(expandProperties.height)) {
+            frame.style.height = expandProperties.height + 'px';
+          }
+          if (!isNaN(expandProperties.width)) {
+            frame.style.width = expandProperties.width + 'px';
+          }
+          break;
+
+        case 'collapse':
           var frame = document.getElementById('an-' + uid);
-          if (contract.easing || contract.duration) {
-            var cssTransition = utils.sprintf('width, height, %sms %s', parseInt(contract.duration || 0, 10), contract.easing);
-            frame.style['-webkit-transition'] = cssTransition;
-            frame.style['-moz-transition'] = cssTransition;
-            frame.style['-ms-transition'] = cssTransition;
-            frame.style['transition'] = cssTransition;
+          if (frame.overlay) {
+            frame.overlay.remove();
+            frame.overlay = null;
+          }
+          if (expandProperties.collapse && (expandProperties.collapse.easing || expandProperties.collapse.duration)) {
+            addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.collapse.duration || 0, 10), expandProperties.collapse.easing));
           }
           frame.style.height = creativeHeight + 'px';
           break;
       }
-    }
-
-    APPNEXUS.ready(function () {
-      windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
-      windowProxy.addEventListener(onMessage);
     });
 
     document.write('<iframe id="an-'+uid+'" name="an-'+uid+'" src="'+mediaURL+'" width="'+creativeWidth+'" height="'+creativeHeight+'" frameborder="0" scrolling="no" allowfullscreen="true" style="width: '+creativeWidth+'px; height: '+creativeHeight+'px; "></iframe>');
 
   }
 }
-},{"../lib/guid":3,"../lib/porthole":4,"../lib/utils":5}],2:[function(require,module,exports){
+},{"../lib/guid":4,"../lib/porthole":5,"../lib/utils":6}],2:[function(require,module,exports){
 'use strict';
 
 var Porthole = require('./lib/porthole');
+var EventListener = require('./lib/event-listener');
 var host = require('./host');
 
-var APPNEXUS = {
-  debug: true
-}
+if (!window.APPNEXUS) {
 
-var init = false;
-var clientPorthole;
+  var APPNEXUS = {
+    debug: false,
+    inFrame: false,
+    EventListener: EventListener
+  }
 
-function initializeClient() {
-  clientPorthole = new Porthole.WindowProxy();
-}
+  var init = false;
+  var expandProperties = {}
+  var dispatcher = new EventListener();
+  var clientPorthole;
 
-APPNEXUS.ready = function (callback, t) {
+  try {
+    APPNEXUS.inFrame = (window.self !== window.top);
+  } catch (e) {
+    APPNEXUS.inFrame = true;
+  }
+
+  dispatcher.addEventListener('ready', function () {
+    clientPorthole = new Porthole.WindowProxy();
+    if (APPNEXUS.debug) console.info('Client initialized!');
+  });
+
   var checkReady = function (f){ /in/.test(document.readyState) ? setTimeout(function () { checkReady(f); } , 9) : f(); }
   checkReady(function (){
-    if (!init) {
-      initializeClient();
-      init = true;
-    }
-    callback();
+    host.ready();
+    dispatcher.dispatchEvent('ready');
   });
-}
 
-APPNEXUS.click = function () {
-  clientPorthole.post({ action: 'click' });
-}
+  APPNEXUS.ready = function (callback) {
+    if (!APPNEXUS.inFrame) APPNEXUS.debug = true;
+    dispatcher.addEventListener('ready', callback);
+  }
 
-APPNEXUS.expand = function (opts) {
-  clientPorthole.post({ action: 'expand', expand: opts });
-}
+  APPNEXUS.click = function () {
+    clientPorthole.post({ action: 'click' });
+    if (APPNEXUS.debug) console.info('Client send action: click');
+  }
 
-APPNEXUS.contract = function (opts) {
-  clientPorthole.post({ action: 'contract', contract: opts });
-}
+  APPNEXUS.setExpandProperties = function (props) {
+    expandProperties = props;
+    clientPorthole.post({ action: 'set-expand-properties', properties: props });
+    if (APPNEXUS.debug) console.info('Client send action: set-expand-properties');
+  }
 
-APPNEXUS.placement = host.placement(APPNEXUS)
+  APPNEXUS.getExpandProperties = function () {
+    return expandProperties;
+  }
+
+  APPNEXUS.expand = function (opts) {
+    clientPorthole.post({ action: 'expand', expand: opts });
+    if (APPNEXUS.debug) console.info('Client send action: expand');
+  }
+
+  APPNEXUS.collapse = function (opts) {
+    clientPorthole.post({ action: 'collapse', contract: opts });
+    if (APPNEXUS.debug) console.info('Client send action: collapse');
+  }
+
+  APPNEXUS.placement = host.placement(APPNEXUS);
+}
 
 if (typeof window.exports !== 'undefined') {
-    window.exports.APPNEXUS = APPNEXUS;
+    window.exports.APPNEXUS = APPNEXUS || window.APPNEXUS;
 } else {
-    window.APPNEXUS = APPNEXUS;
+    window.APPNEXUS = APPNEXUS || window.APPNEXUS;
 }
 
-},{"./host":1,"./lib/porthole":4}],3:[function(require,module,exports){
+},{"./host":1,"./lib/event-listener":3,"./lib/porthole":5}],3:[function(require,module,exports){
+function EventListener() {
+  this.__listeners__ = [];
+}
+
+EventListener.prototype.addEventListener = function (name, callback) {
+  this.__listeners__.push({callback: callback, name: name});
+}
+
+EventListener.prototype.removeEventListener = function (name, callback) {
+  for (var i = this.__listeners__.length - 1; i >= 0; i--) {
+    if (this.__listeners__[i].name === name && this.__listeners__[i].callback === callback) {
+      this.__listeners__.splice(i, 1);
+    }
+  }
+}
+
+EventListener.prototype.dispatchEvent = function (name) {
+  for (var i = this.__listeners__.length - 1; i >= 0; i--) {
+    if (this.__listeners__[(this.__listeners__.length - i - 1)].name === name) {
+      this.__listeners__[(this.__listeners__.length - i - 1)].callback();
+    }
+  }
+}
+
+
+module.exports = window.EventListener || EventListener;
+},{}],4:[function(require,module,exports){
 module.exports = function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -113,7 +194,7 @@ module.exports = function guid() {
   }
   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /*
     Copyright (c) 2011-2012 Ternary Labs. All Rights Reserved.
 
@@ -603,7 +684,7 @@ Porthole.WindowProxyDispatcher = {
 
 module.exports = Porthole;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = {
   sprintf: function (format) {
     var args = arguments;
