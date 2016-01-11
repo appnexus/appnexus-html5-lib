@@ -196,7 +196,7 @@ Returns the current set expanding properties.
 Triggers the ad to expand to the size specified by the expanding properties in `APPNEXUS.setExpandProperties()`.
 
 <br /><br />
-### Method `APPNEXUS.contract() : void`
+### Method `APPNEXUS.collapse() : void`
 
 Triggers the ad to collapse to the original size.
 
