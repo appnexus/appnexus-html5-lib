@@ -18,11 +18,9 @@ npm install appnexus-html5-lib --save
 The `APPNEXUS` object is the base object of the API which provides actions to pass down to the publisher website.
 
 
-#### Methods
+#### Method `APPNEXUS.ready(callback) : void`
 
-##### `void APPNEXUS.ready(callbackFunction)`
-
-The `APPNEXUS.ready()` method is called once the APPNEXUS object has been initialized and the page has been loaded.
+The `APPNEXUS.ready()` will trigger `callback` function once the APPNEXUS object has been initialized and the page has been loaded.
 
 ``` js
 APPNEXUS.ready(function () {
@@ -35,7 +33,7 @@ APPNEXUS.ready(function () {
 ```
 
 <br /><br />
-##### `void APPNEXUS.click([url])`
+#### Method `APPNEXUS.click([url]) : void`
 
 Opens a new window linking to the clickthrough URL or to the specified URL if the `url` parameter is specified.
 
@@ -59,7 +57,7 @@ APPNEXUS.ready(function () {
 ```
 
 <br /><br />
-##### `void APPNEXUS.setExpandProperties(properties)`
+#### Method `APPNEXUS.setExpandProperties(properties) : void`
 
 Sets the expanding properties of an ad, whether that's an interstitial, a push over, or a floating ad.
 
@@ -70,7 +68,7 @@ Options for `properties` settings:
 | `width` | Number | The expanded `width` in pixels | Current ad "width" |
 | `height` | Number | The expanded `height` in pixles | Current ad "height" |
 | `floating` | Boolean | Makes the ad float or push content | `false` |
-| `anchor` | String | Can be one of the following: `"top-right"`, `"bottom-right"`, `"bottom-left"`, or `"top-left"` <br /> <br/ > *NOTE: Only works when the `floating` flag is set to true.* | `"top-left"`
+| `anchor` | String | Can be one of the following: `"top-right"`, `"bottom-right"`, `"bottom-left"`, or `"top-left"` <br/ > *NOTE: Only works when the `floating` flag is set to true.* | `"top-left"`
 | `expand` | Object | Expanding easing animation of the frame. See `easing-properties` option settings. | |
 | `collapse` | Object | Collapsing easing animation of the frame. See `easing-properties` option settings. | Inherits `expand` property |
 | `interstital` | Boolean | Sets the ad as a full screen interstitial with a light box overlay  | `false` |
@@ -152,17 +150,17 @@ APPNEXUS.ready(function () {
 ```
 
 <br /><br />
-##### `options APPNEXUS.getExpandProperties()`
+#### Method `APPNEXUS.getExpandProperties() : Object`
 
 Returns the current set expanding properties.
 
 <br /><br />
-##### `void APPNEXUS.expand()`
+#### Method `APPNEXUS.expand() : void`
 
 Triggers the ad to expand to the size specified by the expanding properties in `APPNEXUS.setExpandProperties()`.
 
 <br /><br />
-##### `void APPNEXUS.contract()`
+#### Method `APPNEXUS.contract() : void`
 
 Triggers the ad to collapse to the original size.
 
