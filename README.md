@@ -18,6 +18,7 @@ npm install appnexus-html5-lib --save
 The `APPNEXUS` object is the base object of the API which provides actions to pass down to the publisher website.
 
 
+<br /><br />
 #### Method `APPNEXUS.ready(callback) : void`
 
 The `APPNEXUS.ready()` will trigger `callback` function once the APPNEXUS object has been initialized and the page has been loaded.
