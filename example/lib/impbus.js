@@ -10,8 +10,9 @@ module.exports = function (adsBasePath) {
       if (!!~files[i].search(/\.json$/i)) {
         var raw = fs.readFileSync(path.join(adsBasePath, '/', files[i]));
         var ad = JSON.parse(raw);
-        loadedAds[ad.size] =  loadedAds[ad.size] || {}
-        loadedAds[ad.size][ad.id] = ad;
+        ad.name = files[i].substr(0, files[i].lastIndexOf('.')) || files[i];
+        loadedAds[ad.id] =  loadedAds[ad.id] || {}
+        loadedAds[ad.id] = ad;
         adCount++;      }
     }
     console.info('Loaded ' + adCount + ' ad(s)');
@@ -27,8 +28,8 @@ module.exports = function (adsBasePath) {
     if (url == '/impbus') {
       var adId = parseInt(queryParams.id, 10);
       if (adId && queryParams.size) {
-        if (loadedAds[queryParams.size][adId]) {
-          var ad = loadedAds[queryParams.size][adId];
+        if (loadedAds[adId]) {
+          var ad = loadedAds[adId];
           var adSize = ad.size.split('x');
           var clickTrack = 'http://' + request.headers.host + '/track?id=' + adId + '&r=' + encodeURIComponent(ad['landing-page']);
           response.write(' \
@@ -48,7 +49,9 @@ module.exports = function (adsBasePath) {
         response.end();
       }
     } else if (url == '/track') {
-      console.log("User has clicked ad ID: ", queryParams.id);
+      var adId = parseInt(queryParams.id, 10);
+      var ad = loadedAds[adId];
+      console.log("User has clicked ad ID: ", queryParams.id, " (", ad.name, ")");
       response.writeHead(302, {'Location': queryParams.r });
       response.end();
     } else {
