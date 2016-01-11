@@ -9,16 +9,15 @@ APPNEXUS.ready(function (){
 		var facebookButton = document.getElementById('facebook-button');
 
 		APPNEXUS.setExpandProperties({
-				height: 272,
-				expand: {
-					easing: 'ease-in-out',
-					duration: 1000
-				},
-				collapse: {
-					easing: 'ease-in-out',
-					duration: 500
-				}
-			})
+			height: 272,
+			expand: {
+				easing: 'ease-in-out',
+				duration: 1000
+			},
+			collapse: {
+				duration: 500
+			}
+		});
 
 		clickMessage.onclick = function (e) {
 			APPNEXUS.expand();

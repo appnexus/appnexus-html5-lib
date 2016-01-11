@@ -30,6 +30,7 @@ module.exports.placement = function (APPNEXUS) {
     var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
     windowProxy.addEventListener(function (messageEvent) {
       var frame = document.getElementById('an-' + uid);
+      var container = frame.parentNode;
       switch(messageEvent.data.action) {
 
         case 'click':
@@ -38,8 +39,23 @@ module.exports.placement = function (APPNEXUS) {
 
         case 'set-expand-properties':
           expandProperties = messageEvent.data.properties || {};
+          if (expandProperties.interstitial) {
+            expandProperties.floating = false;
+          }
           if (expandProperties.floating) {
             frame.style.position = 'absolute';
+            container.style.position = 'relative';
+            container.style.minWidth = creativeWidth + 'px';
+            container.style.minHeight = creativeHeight + 'px';
+            if (expandProperties.anchor) {
+              if (/^top-/.test(expandProperties.anchor)) frame.style.top = '0px';
+              if (/-left$/.test(expandProperties.anchor)) frame.style.left = '0px';
+              if (/-right$/.test(expandProperties.anchor)) frame.style.right = '0px';
+              if (/^bottom-/.test(expandProperties.anchor)) frame.style.bottom = '0px';
+            }
+          }
+          if (expandProperties.expand) {
+            expandProperties.collapse = utils.deepExtend({}, expandProperties.expand, expandProperties.collapse);
           }
           break;
 
@@ -53,7 +69,7 @@ module.exports.placement = function (APPNEXUS) {
           }
 
           if (expandProperties.expand && (expandProperties.expand.easing || expandProperties.expand.duration)) {
-            addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 0, 10), expandProperties.expand.easing));
+            addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 400, 10), expandProperties.expand.easing));
           }
           if (!isNaN(expandProperties.height)) {
             frame.style.height = expandProperties.height + 'px';
@@ -70,14 +86,15 @@ module.exports.placement = function (APPNEXUS) {
             frame.overlay = null;
           }
           if (expandProperties.collapse && (expandProperties.collapse.easing || expandProperties.collapse.duration)) {
-            addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.collapse.duration || 0, 10), expandProperties.collapse.easing));
+            addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.collapse.duration || 400, 10), expandProperties.collapse.easing));
           }
           frame.style.height = creativeHeight + 'px';
+          frame.style.width = creativeWidth + 'px';
           break;
       }
     });
 
-    document.write('<iframe id="an-'+uid+'" name="an-'+uid+'" src="'+mediaURL+'" width="'+creativeWidth+'" height="'+creativeHeight+'" frameborder="0" scrolling="no" allowfullscreen="true" style="width: '+creativeWidth+'px; height: '+creativeHeight+'px; "></iframe>');
+    document.write('<div><iframe id="an-' + uid + '" name="an-' + uid + '" src="' + mediaURL + '" width="' + creativeWidth + '" height="' + creativeHeight + '" frameborder="0" scrolling="no" allowfullscreen="true" style="width: ' + creativeWidth + 'px; height: ' + creativeHeight + 'px; "></iframe></div>');
 
   }
 }
