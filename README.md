@@ -34,6 +34,7 @@ APPNEXUS.ready(function () {
 });
 ```
 
+<br /><br />
 ##### `void APPNEXUS.click([url])`
 
 Opens a new window linking to the clickthrough URL or to the specified URL if the `url` parameter is specified.
@@ -57,6 +58,7 @@ APPNEXUS.ready(function () {
 });
 ```
 
+<br /><br />
 ##### `void APPNEXUS.setExpandProperties(properties)`
 
 Sets the expanding properties of an ad, whether that's an interstitial, a push over, or a floating ad.
@@ -69,14 +71,14 @@ Options for `properties` settings:
 | `height` | Number | The expanded `height` in pixles | Current ad "height" |
 | `floating` | Boolean | Makes the ad float or push content | `false` |
 | `anchor` | String | Can be one of the following: `"top-right"`, `"bottom-right"`, `"bottom-left"`, or `"top-left"` <br /> <br/ > *NOTE: Only works when the `floating` flag is set to true.* | `"top-left"`
-| `expand` | Object | Expanding easing animation of the frame. See `` | |
-| `collapse` | Object | Collapsing easing animation of the frame | Inherits `expand` property |
+| `expand` | Object | Expanding easing animation of the frame. See `easing-properties` option settings. | |
+| `collapse` | Object | Collapsing easing animation of the frame. See `easing-properties` option settings. | Inherits `expand` property |
 | `interstital` | Boolean | Sets the ad as a full screen interstitial with a light box overlay  | `false` |
 | `overlayColor` | String | The CSS color of the light box overlay | `"rgba(0,0,0,0.5)"` |
 
 *NOTE: Setting `interstitial` to `true` will ignore the `floating` value if set together*
 
-<br />
+<br /><br />
 Options for `easing-properties` settings:
 
 |    Property    |   Type  | Value | Default |
@@ -84,7 +86,7 @@ Options for `easing-properties` settings:
 | `easing`       | String  | CSS [transition-timing-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function). | No easing by default |
 | `duration`     | Number  | CSS transtion duration for `easing` | `400` |
 
-<br />
+<br /><br />
 Some examples for `APPNEXUS.setExpandingProperties()`:
 
 **Interstitial Ad Example**
@@ -149,19 +151,23 @@ APPNEXUS.ready(function () {
 });
 ```
 
+<br /><br />
 ##### `options APPNEXUS.getExpandProperties()`
 
 Returns the current set expanding properties.
 
+<br /><br />
 ##### `void APPNEXUS.expand()`
 
 Triggers the ad to expand to the size specified by the expanding properties in `APPNEXUS.setExpandProperties()`.
 
+<br /><br />
 ##### `void APPNEXUS.contract()`
 
 Triggers the ad to collapse to the original size.
 
 
+<br /><br />
 ## Running Example
 
 To run the examples, from the root folder type:
