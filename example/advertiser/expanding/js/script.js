@@ -14,7 +14,7 @@ APPNEXUS.ready(function () {
     floating: true,
     width: 600,
     height: 400,
-    anchor: 'bottom-right',
+    anchor: 'top-left',
     expand: {
       easing: 'ease-in-out',
       duration: 700
