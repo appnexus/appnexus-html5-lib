@@ -4,11 +4,44 @@ The AppNexus HTML5 library helps integrate HTML5 ads into websites in a safe and
 
 ## Installation
 
-Install with npm:
+Run the following from the directory where you want the repo to liv in
 
 ```
-npm install appnexus-html5-lib --save
+git clone <this-repo-url> html5-lib
+cd html5-lib
+npm install
 ```
+
+<br /><br />
+## Development
+
+You can develop and test on the fly by running:
+
+```
+npm run watch
+```
+This will automatically rebuild `appnexus-html5-lib.js` when any of the files under `src` change.
+
+
+You can use the included example to test by running the following:
+
+```
+npm run example
+```
+
+You can run both commands on sepearte terminals for a better develeopment environment.
+
+
+<br /><br />
+## Building
+
+To build the minified version run:
+
+```
+npm run build
+```
+
+This will build three files, `appnexus-html5-lib.js`, `appnexus-html5-lib.min.js` and `appnexus-html5-lib-<version>.js`.
 
 
 <br /><br />
