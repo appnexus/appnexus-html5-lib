@@ -19,7 +19,7 @@ The `APPNEXUS` object is the base object of the API which provides actions to pa
 
 
 <br /><br />
-#### Method `APPNEXUS.ready(callback) : void`
+### Method `APPNEXUS.ready(callback) : void`
 
 The `APPNEXUS.ready()` will trigger `callback` function once the APPNEXUS object has been initialized and the page has been loaded.
 
@@ -34,7 +34,7 @@ APPNEXUS.ready(function () {
 ```
 
 <br /><br />
-#### Method `APPNEXUS.click([url]) : void`
+### Method `APPNEXUS.click([url]) : void`
 
 Opens a new window linking to the clickthrough URL or to the specified URL if the `url` parameter is specified.
 
@@ -58,7 +58,7 @@ APPNEXUS.ready(function () {
 ```
 
 <br /><br />
-#### Method `APPNEXUS.setExpandProperties(properties) : void`
+### Method `APPNEXUS.setExpandProperties(properties) : void`
 
 Sets the expanding properties of an ad, whether that's an interstitial, a push over, or a floating ad.
 
@@ -151,17 +151,17 @@ APPNEXUS.ready(function () {
 ```
 
 <br /><br />
-#### Method `APPNEXUS.getExpandProperties() : Object`
+### Method `APPNEXUS.getExpandProperties() : Object`
 
 Returns the current set expanding properties.
 
 <br /><br />
-#### Method `APPNEXUS.expand() : void`
+### Method `APPNEXUS.expand() : void`
 
 Triggers the ad to expand to the size specified by the expanding properties in `APPNEXUS.setExpandProperties()`.
 
 <br /><br />
-#### Method `APPNEXUS.contract() : void`
+### Method `APPNEXUS.contract() : void`
 
 Triggers the ad to collapse to the original size.
 
