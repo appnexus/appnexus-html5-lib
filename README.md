@@ -171,6 +171,7 @@ APPNEXUS.ready(function () {
   APPNEXUS.setExpandProperties({
     width: 600,
     height: 500,
+    floating: true,
     expand: {
       easing: 'ease-in-out',
       duration: 1000
