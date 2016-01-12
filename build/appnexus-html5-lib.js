@@ -715,7 +715,7 @@ Porthole.WindowProxyDispatcher = {
 module.exports = Porthole;
 
 },{}],6:[function(require,module,exports){
-module.exports = {
+var utils = {
   sprintf: function (format) {
     var args = arguments;
     var index = 0;
@@ -733,7 +733,7 @@ module.exports = {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
           if (typeof obj[key] === 'object')
-            deepExtend(out[key], obj[key]);
+            out[key] = utils.deepExtend(out[key], obj[key]);
           else
             out[key] = obj[key];
         }
@@ -743,4 +743,6 @@ module.exports = {
     return out;
   }
 }
+
+module.exports = utils;
 },{}]},{},[2]);

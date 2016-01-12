@@ -1,7 +1,18 @@
 var expect = require('chai').expect;
+var sprintf = require('../src/lib/utils').sprintf;
+var deepExtend = require('../src/lib/utils').deepExtend;
 
-describe('AppNexusHTML5Lib()', function () {
-    it('does something', function () {
-        expect(false).to.equal(false);
+describe('Util functions', function () {
+    it('checks sprintf works properly', function () {
+        var result = sprintf("There are %s monkeys in %s.", 13, 'Disney');
+        expect(result).to.be.equal("There are 13 monkeys in Disney.");
+    });
+
+    it('checks deepExtend works properly', function () {
+    	var result = deepExtend({}, {'age': 3}, {'gender': 'male', 'father': {'age': 30, 'gender': 'male'}});
+    	expect(result).to.have.deep.property('age', 3);
+    	expect(result).to.have.deep.property('gender', 'male');
+    	expect(result).to.have.deep.property('father.age', 30);
+    	expect(result).to.have.deep.property('father.gender', 'male');
     });
 });

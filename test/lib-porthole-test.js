@@ -1,7 +1,8 @@
 var expect = require('chai').expect;
+var porthole = require('../src/lib/porthole');
 
-describe('AppNexusHTML5Lib()', function () {
-    it('does something', function () {
-        expect(false).to.equal(false);
+describe('Porthole', function () {
+    it('checks it exits', function () {
+        expect(porthole).to.exist;
     });
 });
