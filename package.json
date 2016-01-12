@@ -13,7 +13,7 @@
     "build": "grunt build",
     "example": "node example/index.js",
     "watch": "grunt watch",
-    "test": "mocha --no-colors --reporter spec"
+    "test": "mocha --reporter spec"
   },
   "dependencies": {},
   "devDependencies": {
@@ -24,6 +24,8 @@
     "grunt-contrib-clean": "^0.7.0",
     "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "^0.6.1",
-    "mocha": "*"
+    "jsdom": "^6.5.1",
+    "mocha": "*",
+    "sinon": "^1.17.2"
   }
 }

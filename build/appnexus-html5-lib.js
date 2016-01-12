@@ -5,7 +5,6 @@ var guid = require('../lib/guid');
 var utils = require('../lib/utils');
 var Porthole = require('../lib/porthole');
 
-module.exports.ready = function () {};
 module.exports.placement = function (APPNEXUS) {
   return function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
     var uid = guid();
@@ -25,13 +24,16 @@ module.exports.placement = function (APPNEXUS) {
       el.style['transition'] = cssTransition;
     }
 
-    if (APPNEXUS.debug) console.log('Host placement created');
+    if (APPNEXUS.debug) console.info('Host placement created');
 
     var expandProperties = {};
     var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
     windowProxy.addEventListener(function (messageEvent) {
       var frame = document.getElementById('an-' + uid);
       var container = frame.parentNode;
+
+      console.log(messageEvent);
+
       switch(messageEvent.data.action) {
 
         case 'click':
@@ -97,6 +99,8 @@ module.exports.placement = function (APPNEXUS) {
 
     document.write('<div><iframe id="an-' + uid + '" name="an-' + uid + '" src="' + mediaURL + '" width="' + creativeWidth + '" height="' + creativeHeight + '" frameborder="0" scrolling="no" allowfullscreen="true" style="width: ' + creativeWidth + 'px; height: ' + creativeHeight + 'px; "></iframe></div>');
 
+    return document.getElementById('an-' + uid);
+
   }
 }
 },{"../lib/guid":4,"../lib/porthole":5,"../lib/utils":6}],2:[function(require,module,exports){
@@ -106,73 +110,83 @@ var Porthole = require('./lib/porthole');
 var EventListener = require('./lib/event-listener');
 var host = require('./host');
 
-if (!window.APPNEXUS) {
 
-  var APPNEXUS = {
-    debug: false,
-    inFrame: false,
-    EventListener: EventListener
-  }
+function AppNexusHTML5Lib ()  {
+  var self = this;
+  this.debug = false;
+  this.inFrame = false;
+  this.EventListener = EventListener;
 
-  var init = false;
+  var isClient = false;
+  var readyCalled = false;
+  var isPageLoaded = false;
   var expandProperties = {}
   var dispatcher = new EventListener();
   var clientPorthole;
 
   try {
-    APPNEXUS.inFrame = (window.self !== window.top);
+    this.inFrame = (window.self !== window.top);
   } catch (e) {
-    APPNEXUS.inFrame = true;
+    this.inFrame = true;
   }
 
   dispatcher.addEventListener('ready', function () {
-    clientPorthole = new Porthole.WindowProxy();
-    if (APPNEXUS.debug) console.info('Client initialized!');
+    if (readyCalled) {
+      clientPorthole = new Porthole.WindowProxy();
+      if (self.debug) console.info('Client initialized!');
+    }
   });
 
   var checkReady = function (f){ /in/.test(document.readyState) ? setTimeout(function () { checkReady(f); } , 9) : f(); }
   checkReady(function (){
-    host.ready();
+    isPageLoaded = true;
     dispatcher.dispatchEvent('ready');
   });
 
-  APPNEXUS.ready = function (callback) {
-    if (!APPNEXUS.inFrame) APPNEXUS.debug = true;
-    dispatcher.addEventListener('ready', callback);
+  this.ready = function (callback) {
+    if (!readyCalled) {
+      readyCalled = true;
+      self.debug = !self.inFrame;
+      dispatcher.addEventListener('ready', callback);
+
+      if (isPageLoaded) {
+        dispatcher.dispatchEvent('ready');
+      }
+    }
   }
 
-  APPNEXUS.click = function () {
+  this.click = function () {
     clientPorthole.post({ action: 'click' });
-    if (APPNEXUS.debug) console.info('Client send action: click');
+    if (self.debug) console.info('Client send action: click');
   }
 
-  APPNEXUS.setExpandProperties = function (props) {
+  this.setExpandProperties = function (props) {
     expandProperties = props;
     clientPorthole.post({ action: 'set-expand-properties', properties: props });
-    if (APPNEXUS.debug) console.info('Client send action: set-expand-properties');
+    if (self.debug) console.info('Client send action: set-expand-properties');
   }
 
-  APPNEXUS.getExpandProperties = function () {
+  this.getExpandProperties = function () {
     return expandProperties;
   }
 
-  APPNEXUS.expand = function (opts) {
-    clientPorthole.post({ action: 'expand', expand: opts });
-    if (APPNEXUS.debug) console.info('Client send action: expand');
+  this.expand = function () {
+    clientPorthole.post({ action: 'expand' });
+    if (self.debug) console.info('Client send action: expand');
   }
 
-  APPNEXUS.collapse = function (opts) {
-    clientPorthole.post({ action: 'collapse', contract: opts });
-    if (APPNEXUS.debug) console.info('Client send action: collapse');
+  this.collapse = function () {
+    clientPorthole.post({ action: 'collapse' });
+    if (self.debug) console.info('Client send action: collapse');
   }
 
-  APPNEXUS.placement = host.placement(APPNEXUS);
+  this.placement = host.placement(this);
 }
 
 if (typeof window.exports !== 'undefined') {
-    window.exports.APPNEXUS = APPNEXUS || window.APPNEXUS;
+  window.exports.APPNEXUS = window.APPNEXUS || new AppNexusHTML5Lib();
 } else {
-    window.APPNEXUS = APPNEXUS || window.APPNEXUS;
+  window.APPNEXUS = window.APPNEXUS || new AppNexusHTML5Lib();
 }
 
 },{"./host":1,"./lib/event-listener":3,"./lib/porthole":5}],3:[function(require,module,exports){
@@ -584,7 +598,7 @@ Porthole.WindowProxy.unserialize =  function(text) {
 
 Porthole.WindowProxy.getTargetWindow = function(targetWindowName) {
     if (targetWindowName === '') {
-        return parent;
+        return window.parent;
     } else if (targetWindowName === 'top' || targetWindowName === 'parent') {
         return window[targetWindowName];
     }
