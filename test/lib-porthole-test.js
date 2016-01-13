@@ -1,8 +1,21 @@
 var expect = require('chai').expect;
-var porthole = require('../src/lib/porthole');
+var jsdom = require('./helpers/jsdom');
+var fixtures = require('./helpers/fixtures')
 
 describe('Porthole', function () {
-    it('checks it exits', function () {
-        expect(porthole).to.exist;
+  before(function (done) {
+    jsdom.createPage(fixtures.HTML5_WEBPAGE, function (window) {
+      global.window = window;
+      done();
     });
+  })
+
+  after(function () {
+    global.window = undefined;
+  })
+
+  it('checks it exits', function () {
+    var porthole = require('../src/lib/porthole');
+    expect(porthole).to.exist;
+  });
 });

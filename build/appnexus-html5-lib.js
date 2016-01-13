@@ -28,11 +28,10 @@ module.exports.placement = function (APPNEXUS) {
 
     var expandProperties = {};
     var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
+
     windowProxy.addEventListener(function (messageEvent) {
       var frame = document.getElementById('an-' + uid);
       var container = frame.parentNode;
-
-      console.log(messageEvent);
 
       switch(messageEvent.data.action) {
 
@@ -147,7 +146,9 @@ function AppNexusHTML5Lib ()  {
     if (!readyCalled) {
       readyCalled = true;
       self.debug = !self.inFrame;
-      dispatcher.addEventListener('ready', callback);
+      if (typeof callback === 'function') {
+        dispatcher.addEventListener('ready', callback);
+      }
 
       if (isPageLoaded) {
         dispatcher.dispatchEvent('ready');
@@ -156,11 +157,13 @@ function AppNexusHTML5Lib ()  {
   }
 
   this.click = function () {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
     clientPorthole.post({ action: 'click' });
     if (self.debug) console.info('Client send action: click');
   }
 
   this.setExpandProperties = function (props) {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
     expandProperties = props;
     clientPorthole.post({ action: 'set-expand-properties', properties: props });
     if (self.debug) console.info('Client send action: set-expand-properties');
@@ -171,11 +174,13 @@ function AppNexusHTML5Lib ()  {
   }
 
   this.expand = function () {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
     clientPorthole.post({ action: 'expand' });
     if (self.debug) console.info('Client send action: expand');
   }
 
   this.collapse = function () {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
     clientPorthole.post({ action: 'collapse' });
     if (self.debug) console.info('Client send action: collapse');
   }
@@ -183,12 +188,13 @@ function AppNexusHTML5Lib ()  {
   this.placement = host.placement(this);
 }
 
-if (typeof window.exports !== 'undefined') {
-  window.exports.APPNEXUS = window.APPNEXUS || new AppNexusHTML5Lib();
-} else {
-  window.APPNEXUS = window.APPNEXUS || new AppNexusHTML5Lib();
+
+var APPNEXUS = new AppNexusHTML5Lib();
+if (typeof window !== 'undefined') {
+  window.APPNEXUS = APPNEXUS;
 }
 
+module.exports = APPNEXUS;
 },{"./host":1,"./lib/event-listener":3,"./lib/porthole":5}],3:[function(require,module,exports){
 function EventListener() {
   this.__listeners__ = [];
@@ -214,7 +220,7 @@ EventListener.prototype.dispatchEvent = function (name) {
   }
 }
 
-module.exports = window.EventListener || EventListener;
+module.exports = EventListener;
 },{}],4:[function(require,module,exports){
 module.exports = function guid() {
   function s4() {

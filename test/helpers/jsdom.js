@@ -1,8 +1,29 @@
-var jsdom = require('jsdom').jsdom;
+var jsdom = require('jsdom');
 
-global.document = jsdom('<!doctype html><html><body></body></html>');
-global.window = document.defaultView;
+jsdom.createPage = function  (html, scriptSources, callback) {
+  if (typeof scriptSources === 'function' && callback === undefined) {
+    callback = scriptSources
+    scriptSources = undefined;
+  }
+  jsdom.env({
+    html: html,
+    virtualConsole: jsdom.createVirtualConsole().sendTo(console),
+    src: scriptSources,
+    done: function (err, window) {
+      if (err) throw err;
+      window.open = function () { };
+      callback(window);
+    }
+  });
+}
 
-require('../../src');
+jsdom.injectScript = function (document, scriptSource, callback) {
+  var script = document.createElement('script');
+  script.onload = function () {
+    callback();
+  }
+  script.text = scriptSource;
+  document.body.appendChild(script);
+}
 
 module.exports = jsdom;

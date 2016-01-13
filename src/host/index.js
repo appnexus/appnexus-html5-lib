@@ -27,11 +27,10 @@ module.exports.placement = function (APPNEXUS) {
 
     var expandProperties = {};
     var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
+
     windowProxy.addEventListener(function (messageEvent) {
       var frame = document.getElementById('an-' + uid);
       var container = frame.parentNode;
-
-      console.log(messageEvent);
 
       switch(messageEvent.data.action) {
 
