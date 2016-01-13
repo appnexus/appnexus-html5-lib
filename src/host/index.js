@@ -4,7 +4,6 @@ var guid = require('../lib/guid');
 var utils = require('../lib/utils');
 var Porthole = require('../lib/porthole');
 
-module.exports.ready = function () {};
 module.exports.placement = function (APPNEXUS) {
   return function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
     var uid = guid();
@@ -24,13 +23,15 @@ module.exports.placement = function (APPNEXUS) {
       el.style['transition'] = cssTransition;
     }
 
-    if (APPNEXUS.debug) console.log('Host placement created');
+    if (APPNEXUS.debug) console.info('Host placement created');
 
     var expandProperties = {};
     var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
+
     windowProxy.addEventListener(function (messageEvent) {
       var frame = document.getElementById('an-' + uid);
       var container = frame.parentNode;
+
       switch(messageEvent.data.action) {
 
         case 'click':
@@ -95,6 +96,8 @@ module.exports.placement = function (APPNEXUS) {
     });
 
     document.write('<div><iframe id="an-' + uid + '" name="an-' + uid + '" src="' + mediaURL + '" width="' + creativeWidth + '" height="' + creativeHeight + '" frameborder="0" scrolling="no" allowfullscreen="true" style="width: ' + creativeWidth + 'px; height: ' + creativeHeight + 'px; "></iframe></div>');
+
+    return document.getElementById('an-' + uid);
 
   }
 }

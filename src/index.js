@@ -4,71 +4,89 @@ var Porthole = require('./lib/porthole');
 var EventListener = require('./lib/event-listener');
 var host = require('./host');
 
-if (!window.APPNEXUS) {
 
-  var APPNEXUS = {
-    debug: false,
-    inFrame: false,
-    EventListener: EventListener
-  }
+function AppNexusHTML5Lib ()  {
+  var self = this;
+  this.debug = false;
+  this.inFrame = false;
+  this.EventListener = EventListener;
 
-  var init = false;
+  var isClient = false;
+  var readyCalled = false;
+  var isPageLoaded = false;
   var expandProperties = {}
   var dispatcher = new EventListener();
   var clientPorthole;
 
   try {
-    APPNEXUS.inFrame = (window.self !== window.top);
+    this.inFrame = (window.self !== window.top);
   } catch (e) {
-    APPNEXUS.inFrame = true;
+    this.inFrame = true;
   }
 
   dispatcher.addEventListener('ready', function () {
-    clientPorthole = new Porthole.WindowProxy();
-    if (APPNEXUS.debug) console.info('Client initialized!');
+    if (readyCalled) {
+      clientPorthole = new Porthole.WindowProxy();
+      if (self.debug) console.info('Client initialized!');
+    }
   });
 
   var checkReady = function (f){ /in/.test(document.readyState) ? setTimeout(function () { checkReady(f); } , 9) : f(); }
   checkReady(function (){
-    host.ready();
+    isPageLoaded = true;
     dispatcher.dispatchEvent('ready');
   });
 
-  APPNEXUS.ready = function (callback) {
-    if (!APPNEXUS.inFrame) APPNEXUS.debug = true;
-    dispatcher.addEventListener('ready', callback);
+  this.ready = function (callback) {
+    if (!readyCalled) {
+      readyCalled = true;
+      self.debug = !self.inFrame;
+      if (typeof callback === 'function') {
+        dispatcher.addEventListener('ready', callback);
+      }
+
+      if (isPageLoaded) {
+        dispatcher.dispatchEvent('ready');
+      }
+    }
   }
 
-  APPNEXUS.click = function () {
+  this.click = function () {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
     clientPorthole.post({ action: 'click' });
-    if (APPNEXUS.debug) console.info('Client send action: click');
+    if (self.debug) console.info('Client send action: click');
   }
 
-  APPNEXUS.setExpandProperties = function (props) {
+  this.setExpandProperties = function (props) {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
     expandProperties = props;
     clientPorthole.post({ action: 'set-expand-properties', properties: props });
-    if (APPNEXUS.debug) console.info('Client send action: set-expand-properties');
+    if (self.debug) console.info('Client send action: set-expand-properties');
   }
 
-  APPNEXUS.getExpandProperties = function () {
+  this.getExpandProperties = function () {
     return expandProperties;
   }
 
-  APPNEXUS.expand = function (opts) {
-    clientPorthole.post({ action: 'expand', expand: opts });
-    if (APPNEXUS.debug) console.info('Client send action: expand');
+  this.expand = function () {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
+    clientPorthole.post({ action: 'expand' });
+    if (self.debug) console.info('Client send action: expand');
   }
 
-  APPNEXUS.collapse = function (opts) {
-    clientPorthole.post({ action: 'collapse', contract: opts });
-    if (APPNEXUS.debug) console.info('Client send action: collapse');
+  this.collapse = function () {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
+    clientPorthole.post({ action: 'collapse' });
+    if (self.debug) console.info('Client send action: collapse');
   }
 
-  APPNEXUS.placement = host.placement(APPNEXUS);
+  this.placement = host.placement(this);
 }
 
-if (typeof window.exports !== 'undefined') {
-    window.exports.APPNEXUS = APPNEXUS || window.APPNEXUS;
-} else {
-    window.APPNEXUS = APPNEXUS || window.APPNEXUS;
+
+var APPNEXUS = new AppNexusHTML5Lib();
+if (typeof window !== 'undefined') {
+  window.APPNEXUS = APPNEXUS;
 }
+
+module.exports = APPNEXUS;

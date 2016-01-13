@@ -22,4 +22,4 @@ EventListener.prototype.dispatchEvent = function (name) {
   }
 }
 
-module.exports = window.EventListener || EventListener;
+module.exports = EventListener;

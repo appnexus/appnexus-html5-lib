@@ -371,7 +371,7 @@ Porthole.WindowProxy.unserialize =  function(text) {
 
 Porthole.WindowProxy.getTargetWindow = function(targetWindowName) {
     if (targetWindowName === '') {
-        return parent;
+        return window.parent;
     } else if (targetWindowName === 'top' || targetWindowName === 'parent') {
         return window[targetWindowName];
     }
