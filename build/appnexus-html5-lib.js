@@ -7,14 +7,19 @@ var Porthole = require('../lib/porthole');
 
 module.exports.placement = function (APPNEXUS) {
   return function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
-    var uid = guid();
+    if (APPNEXUS.debug) console.info('Host placement created');
 
-    function overlayElement(el, z) {
-      el.style.top = el.style.left = el.style.right = el.style.bottom = 0;
-      el.style.width = el.style.height = '100%';
-      el.style.zIndex = z;
-      el.style.position = 'absolute';
-      return el;
+    var uid = guid();
+    var usingAst = typeof inDapIF != 'undefined'&& inDapIF;
+    var expandProperties = {};
+    var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
+
+    function maximizeElement(element, zIndex) {
+      element.style.top = element.style.left = element.style.right = element.style.bottom = 0;
+      element.style.width = element.style.height = '100%';
+      element.style.zIndex = zIndex;
+      element.style.position = 'absolute';
+      return element;
     }
 
     function addCSSTranstions(el, cssTransition) {
@@ -24,19 +29,79 @@ module.exports.placement = function (APPNEXUS) {
       el.style['transition'] = cssTransition;
     }
 
-    if (APPNEXUS.debug) console.info('Host placement created');
+    function getIframeContentDoc(iframe) {
+      var doc;
+      try {
+        if (iframe.contentWindow) {
+          doc = iframe.contentWindow.document;
+        } else if (iframe.contentDocument.document) {
+          doc = iframe.contentDocument.document;
+        } else {
+          doc = iframe.contentDocument;
+        }
+      } catch (e) {
+        if (APPNEXUS.debug) console.error('Error getting iframe document: ' + e);
+      }
+      return doc;
+    }
+    function getFrameReference(parentWindow, frameDocument){
+      var frame;
+      var frames = parentWindow.document.getElementsByTagName("iframe");
+      for (var i= frames.length; i-->0;) {
+        var d= getIframeContentDoc(frames[i]);
+        if (d===frameDocument){
+          frame = frames[i];
+          break;
+        }
+      }
+      return frame;
+    }
 
-    var expandProperties = {};
-    var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
+    function expandFrame(frame, expandProperties){
+      if (expandProperties.expand && (expandProperties.expand.easing || expandProperties.expand.duration)) {
+        addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 400, 10), expandProperties.expand.easing));
+      }
+      if (!isNaN(expandProperties.height)) {
+        frame.style.height = expandProperties.height + 'px';
+      }
+      if (!isNaN(expandProperties.width)) {
+        frame.style.width = expandProperties.width + 'px';
+      }
+    }
+
+    function collapseFrame(frame, expandProperties){
+      if (expandProperties.collapse && (expandProperties.collapse.easing || expandProperties.collapse.duration)) {
+        addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.collapse.duration || 400, 10), expandProperties.collapse.easing));
+      }
+      frame.style.height = creativeHeight + 'px';
+      frame.style.width = creativeWidth + 'px';
+    }
+    function addOverlay(frame, zIndex, expandProperties){
+      frame.overlay = document.createElement('div');
+      frame.overlay.style.backgroundColor = expandProperties.overlayColor || 'rgba(0,0,0,0.5)';
+      document.body.appendChild(frame.overlay);
+      maximizeElement(frame.overlay, zIndex);
+    }
+    function removeOverlay(frame, expandProperties){
+      if (frame.overlay) {
+        frame.overlay.remove();
+        frame.overlay = null;
+      }
+    }
+
+
 
     windowProxy.addEventListener(function (messageEvent) {
-      var frame = document.getElementById('an-' + uid);
-      var container = frame.parentNode;
+      var adFrame = document.getElementById('an-' + uid);
+      var astFrame = usingAst? getFrameReference(window.parent, document) : false;
+      var topWindow = usingAst? window.parent.window : window;
+      var topContainer = usingAst? astFrame.parentNode : adFrame.parentNode;
+      var topFrame = usingAst? astFrame : adFrame;
 
       switch(messageEvent.data.action) {
 
         case 'click':
-          window.open(landingPageURL);
+          topWindow.open(landingPageURL);
           break;
 
         case 'set-expand-properties':
@@ -45,15 +110,16 @@ module.exports.placement = function (APPNEXUS) {
             expandProperties.floating = false;
           }
           if (expandProperties.floating) {
-            frame.style.position = 'absolute';
-            container.style.position = 'relative';
-            container.style.minWidth = creativeWidth + 'px';
-            container.style.minHeight = creativeHeight + 'px';
+
+            topFrame.style.position = 'absolute';
+            topContainer.style.position = 'relative';
+            topContainer.style.minWidth = creativeWidth + 'px';
+            topContainer.style.minHeight = creativeHeight + 'px';
             if (expandProperties.anchor) {
-              if (/^top-/.test(expandProperties.anchor)) frame.style.top = '0px';
-              if (/-left$/.test(expandProperties.anchor)) frame.style.left = '0px';
-              if (/-right$/.test(expandProperties.anchor)) frame.style.right = '0px';
-              if (/^bottom-/.test(expandProperties.anchor)) frame.style.bottom = '0px';
+              if (/^top-/.test(expandProperties.anchor)) topFrame.style.top = '0px';
+              if (/-left$/.test(expandProperties.anchor)) topFrame.style.left = '0px';
+              if (/-right$/.test(expandProperties.anchor)) topFrame.style.right = '0px';
+              if (/^bottom-/.test(expandProperties.anchor)) topFrame.style.bottom = '0px';
             }
           }
           if (expandProperties.expand) {
@@ -63,35 +129,25 @@ module.exports.placement = function (APPNEXUS) {
 
         case 'expand':
           if (expandProperties.interstitial) {
-            frame.overlay = document.createElement('div');
-            frame.overlay.style.backgroundColor = expandProperties.overlayColor || 'rgba(0,0,0,0.5)';
-            document.body.appendChild(frame.overlay);
-            overlayElement(frame.overlay, 99999);
-            overlayElement(frame, 100000);
+            addOverlay(topFrame, 99998, expandProperties);
+            maximizeElement(adFrame, 99999);
+            maximizeElement(topFrame, 100000);
           }
 
-          if (expandProperties.expand && (expandProperties.expand.easing || expandProperties.expand.duration)) {
-            addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 400, 10), expandProperties.expand.easing));
-          }
-          if (!isNaN(expandProperties.height)) {
-            frame.style.height = expandProperties.height + 'px';
-          }
-          if (!isNaN(expandProperties.width)) {
-            frame.style.width = expandProperties.width + 'px';
+          expandFrame(adFrame, expandProperties);
+          if(astFrame){
+            expandFrame(astFrame, expandProperties);
           }
           break;
 
         case 'collapse':
-          var frame = document.getElementById('an-' + uid);
-          if (frame.overlay) {
-            frame.overlay.remove();
-            frame.overlay = null;
+          if (expandProperties.interstitial) {
+            removeOverlay(topFrame, expandProperties);
           }
-          if (expandProperties.collapse && (expandProperties.collapse.easing || expandProperties.collapse.duration)) {
-            addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.collapse.duration || 400, 10), expandProperties.collapse.easing));
+          collapseFrame(adFrame, expandProperties);
+          if(astFrame){
+            collapseFrame(astFrame, expandProperties);
           }
-          frame.style.height = creativeHeight + 'px';
-          frame.style.width = creativeWidth + 'px';
           break;
       }
     });
