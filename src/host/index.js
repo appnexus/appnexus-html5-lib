@@ -9,7 +9,7 @@ module.exports.placement = function (APPNEXUS) {
     if (APPNEXUS.debug) console.info('Host placement created');
 
     var uid = guid();
-    var usingAst = typeof inDapIF != 'undefined'&& inDapIF;
+    var usingAst = typeof inDapIF != 'undefined' && inDapIF;
     var expandProperties = {};
     var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
 
@@ -137,10 +137,10 @@ module.exports.placement = function (APPNEXUS) {
 
     windowProxy.addEventListener(function (messageEvent) {
       var adFrame = document.getElementById('an-' + uid);
-      var astFrame = usingAst? getFrameReference(window.parent, document) : false;
-      var topWindow = usingAst? window.parent.window : window;
-      var topContainer = usingAst? astFrame.parentNode : adFrame.parentNode;
-      var topFrame = usingAst? astFrame : adFrame;
+      var astFrame = usingAst ? getFrameReference(window.parent, document) : false;
+      var topWindow = usingAst ? window.parent.window : window;
+      var topContainer = usingAst ? astFrame.parentNode : adFrame.parentNode;
+      var topFrame = usingAst ? astFrame : adFrame;
 
       switch(messageEvent.data.action) {
 
@@ -179,7 +179,7 @@ module.exports.placement = function (APPNEXUS) {
           }
 
           expandFrame(adFrame, expandProperties);
-          if(astFrame){
+          if (astFrame){
             expandFrame(astFrame, expandProperties);
           }
           break;
@@ -189,7 +189,7 @@ module.exports.placement = function (APPNEXUS) {
             removeOverlay(topFrame, expandProperties);
           }
           collapseFrame(adFrame, expandProperties);
-          if(astFrame){
+          if (astFrame){
             collapseFrame(astFrame, expandProperties);
           }
           break;
