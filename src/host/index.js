@@ -13,6 +13,12 @@ module.exports.placement = function (APPNEXUS) {
     var expandProperties = {};
     var windowProxy = new Porthole.WindowProxy(null, 'an-' + uid);
 
+    /**
+     * Add styles needed for a full screen element
+     * @param element
+     * @param zIndex
+     * @returns {*}
+     */
     function maximizeElement(element, zIndex) {
       element.style.top = element.style.left = element.style.right = element.style.bottom = 0;
       element.style.width = element.style.height = '100%';
@@ -21,6 +27,11 @@ module.exports.placement = function (APPNEXUS) {
       return element;
     }
 
+    /**
+     * Add cross browser css transitions
+     * @param el
+     * @param cssTransition
+     */
     function addCSSTranstions(el, cssTransition) {
       el.style['-webkit-transition'] = cssTransition;
       el.style['-moz-transition'] = cssTransition;
@@ -28,26 +39,39 @@ module.exports.placement = function (APPNEXUS) {
       el.style['transition'] = cssTransition;
     }
 
-    function getIframeContentDoc(iframe) {
+    /**
+     * Cross browser support for getting document object from an iframe
+     * @param frame
+     * @returns {*}
+     */
+    function getFrameContentDoc(frame) {
       var doc;
       try {
-        if (iframe.contentWindow) {
-          doc = iframe.contentWindow.document;
-        } else if (iframe.contentDocument.document) {
-          doc = iframe.contentDocument.document;
+        if (frame.contentWindow) {
+          doc = frame.contentWindow.document;
+        } else if (frame.contentDocument.document) {
+          doc = frame.contentDocument.document;
         } else {
-          doc = iframe.contentDocument;
+          doc = frame.contentDocument;
         }
       } catch (e) {
         if (APPNEXUS.debug) console.error('Error getting iframe document: ' + e);
       }
       return doc;
     }
+
+    /**
+     * Gets a reference to a specific iframe from a window based on its contents.
+     * Useful for getting a reference to self when in an iframe
+     * @param parentWindow
+     * @param frameDocument
+     * @returns {*}
+     */
     function getFrameReference(parentWindow, frameDocument){
       var frame;
       var frames = parentWindow.document.getElementsByTagName("iframe");
       for (var i= frames.length; i-->0;) {
-        var d= getIframeContentDoc(frames[i]);
+        var d= getFrameContentDoc(frames[i]);
         if (d===frameDocument){
           frame = frames[i];
           break;
@@ -56,6 +80,11 @@ module.exports.placement = function (APPNEXUS) {
       return frame;
     }
 
+    /**
+     * Handle expand animation
+     * @param frame
+     * @param expandProperties
+     */
     function expandFrame(frame, expandProperties){
       if (expandProperties.expand && (expandProperties.expand.easing || expandProperties.expand.duration)) {
         addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 400, 10), expandProperties.expand.easing));
@@ -68,6 +97,11 @@ module.exports.placement = function (APPNEXUS) {
       }
     }
 
+    /**
+     * Handle collapse animation
+     * @param frame
+     * @param expandProperties
+     */
     function collapseFrame(frame, expandProperties){
       if (expandProperties.collapse && (expandProperties.collapse.easing || expandProperties.collapse.duration)) {
         addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.collapse.duration || 400, 10), expandProperties.collapse.easing));
@@ -75,20 +109,31 @@ module.exports.placement = function (APPNEXUS) {
       frame.style.height = creativeHeight + 'px';
       frame.style.width = creativeWidth + 'px';
     }
+
+    /**
+     * Ad an overlay to an iframe
+     * @param frame
+     * @param zIndex
+     * @param expandProperties
+     */
     function addOverlay(frame, zIndex, expandProperties){
       frame.overlay = document.createElement('div');
       frame.overlay.style.backgroundColor = expandProperties.overlayColor || 'rgba(0,0,0,0.5)';
       document.body.appendChild(frame.overlay);
       maximizeElement(frame.overlay, zIndex);
     }
+
+    /**
+     * Remove an overlay from an iframe
+     * @param frame
+     * @param expandProperties
+     */
     function removeOverlay(frame, expandProperties){
       if (frame.overlay) {
         frame.overlay.remove();
         frame.overlay = null;
       }
     }
-
-
 
     windowProxy.addEventListener(function (messageEvent) {
       var adFrame = document.getElementById('an-' + uid);
@@ -156,4 +201,4 @@ module.exports.placement = function (APPNEXUS) {
     return document.getElementById('an-' + uid);
 
   }
-}
+};
