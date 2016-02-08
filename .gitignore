@@ -1,4 +1,5 @@
 node_modules
 .DS_Store
+.idea
 /resin.json
 /build/appnexus-html5-lib-*.min.js
