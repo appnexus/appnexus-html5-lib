@@ -131,7 +131,7 @@ module.exports.placement = function (APPNEXUS) {
      */
     function removeOverlay(frame, expandProperties){
       if (frame.overlay) {
-        frame.overlay.remove();
+        frame.overlay.parentNode.removeChild(frame.overlay); //cross browser compatible way to remove element
         frame.overlay = null;
       }
     }
