@@ -1,4 +1,3 @@
-
 APPNEXUS.ready(function () {
   var videoIsMuted = false;
   var video = document.getElementById("video");
