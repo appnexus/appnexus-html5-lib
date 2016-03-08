@@ -174,9 +174,9 @@ module.exports.placement = function (APPNEXUS) {
         case 'expand':
           if (expandProperties.interstitial) {
             addOverlay(topFrame, 99998, expandProperties);
-            maximizeElement(topFrame, 100002);
+            maximizeElement(topFrame, 99999);
             //timeout to work around safari rendering bug where popup isn't rendered properly for AST :(
-            setTimeout(function(){maximizeElement(adFrame, 100001)}, 100);
+            setTimeout(function(){maximizeElement(adFrame, 100000)}, 100);
           }
 
           expandFrame(adFrame, expandProperties);
