@@ -176,9 +176,8 @@ module.exports.placement = function (APPNEXUS) {
           if (expandProperties.interstitial) {
             addOverlay(topFrame, 99998, expandProperties);
             maximizeElement(topFrame, 100002);
-            maximizeElement(adFrame, 100001);
             //timeout to work around safari rendering bug where popup isn't rendered properly for AST :(
-            //setTimeout(function(){maximizeElement(adFrame, 100001)}, 100);
+            setTimeout(function(){maximizeElement(adFrame, 100001)}, 100);
           }
 
           expandFrame(adFrame, expandProperties);
@@ -235,7 +234,7 @@ function AppNexusHTML5Lib ()  {
   dispatcher.addEventListener('ready', function () {
     if (readyCalled) {
       clientPorthole = new Porthole.WindowProxy();
-      console.info('Client initialized!');
+      if (self.debug) console.info('Client initialized!');
     }
   });
 
