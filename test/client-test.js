@@ -19,12 +19,12 @@ describe('appnexus-html5-lib client', function () {
     });
   });
 
-  it('check APPNEXUS.click() sends postMessage to host', function  (done) {
-    var spy = sinon.spy(windowObject, 'postMessage');
+  it('check APPNEXUS.click() opens new window', function  (done) {
+    var spy = sinon.spy(windowObject, 'open');
 
     windowObject.APPNEXUS.ready(function () {
       windowObject.APPNEXUS.click();
-      expect(spy.withArgs(fixtures.CLICK_MESSAGE).calledOnce).to.equal(true);
+      expect(spy.calledOnce).to.equal(true);
       done();
     });
   });

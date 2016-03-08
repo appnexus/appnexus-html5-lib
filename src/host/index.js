@@ -145,7 +145,7 @@ module.exports.placement = function (APPNEXUS) {
       switch(messageEvent.data.action) {
 
         case 'click':
-          topWindow.open(landingPageURL);
+          topWindow.open(landingPageURL, "_blank");  //leave this for backwards compatibility till next breaking change
           break;
 
         case 'set-expand-properties':
@@ -183,7 +183,12 @@ module.exports.placement = function (APPNEXUS) {
             expandFrame(astFrame, expandProperties);
           }
           break;
-
+        case 'ready':
+          var adData = {
+            landingPageUrl: landingPageURL
+          };
+          windowProxy.post({ action: 'setAdData', parameters: adData });
+          break;
         case 'collapse':
           if (expandProperties.interstitial) {
             removeOverlay(topFrame, expandProperties);
