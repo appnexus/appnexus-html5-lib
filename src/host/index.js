@@ -22,8 +22,8 @@ module.exports.placement = function (APPNEXUS) {
     function maximizeElement(element, zIndex) {
       element.style.top = element.style.left = element.style.right = element.style.bottom = 0;
       element.style.width = element.style.height = '100%';
+      element.style.position = 'fixed';
       element.style.zIndex = zIndex;
-      element.style.position = 'absolute';
       return element;
     }
 
@@ -155,7 +155,7 @@ module.exports.placement = function (APPNEXUS) {
           }
           if (expandProperties.floating) {
 
-            topFrame.style.position = 'absolute';
+            topFrame.style.position = 'fixed';
             topContainer.style.position = 'relative';
             topContainer.style.minWidth = creativeWidth + 'px';
             topContainer.style.minHeight = creativeHeight + 'px';
@@ -174,8 +174,10 @@ module.exports.placement = function (APPNEXUS) {
         case 'expand':
           if (expandProperties.interstitial) {
             addOverlay(topFrame, 99998, expandProperties);
-            maximizeElement(adFrame, 99999);
-            maximizeElement(topFrame, 100000);
+            maximizeElement(topFrame, 100002);
+            maximizeElement(adFrame, 100001);
+            //timeout to work around safari rendering bug where popup isn't rendered properly for AST :(
+            //setTimeout(function(){maximizeElement(adFrame, 100001)}, 100);
           }
 
           expandFrame(adFrame, expandProperties);
