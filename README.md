@@ -206,7 +206,7 @@ APPNEXUS.ready(function () {
 ``` js
 // Original ad size 720x90 that expands to 720x275
 APPNEXUS.ready(function () {
-  var button = document.findElementById('button');
+  var button = document.getElementById('button');
 
   APPNEXUS.setExpandProperties({
     height: 275,
@@ -232,7 +232,7 @@ APPNEXUS.ready(function () {
 ``` js
 // Original ad size 300x250 that expands to 600x500
 APPNEXUS.ready(function () {
-  var button = document.findElementById('button');
+  var button = document.getElementById('button');
 
   APPNEXUS.setExpandProperties({
     width: 600,
