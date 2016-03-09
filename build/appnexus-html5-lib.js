@@ -159,7 +159,7 @@ module.exports.placement = function (APPNEXUS) {
           }
           if (expandProperties.floating) {
 
-            topFrame.style.position = 'fixed';
+            topFrame.style.position = 'absolute';
             topContainer.style.position = 'relative';
             topContainer.style.minWidth = creativeWidth + 'px';
             topContainer.style.minHeight = creativeHeight + 'px';
