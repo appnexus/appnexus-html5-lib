@@ -90,11 +90,14 @@ module.exports.placement = function (APPNEXUS) {
       if (expandProperties.expand && (expandProperties.expand.easing || expandProperties.expand.duration)) {
         addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 400, 10), expandProperties.expand.easing));
       }
-      if (!isNaN(expandProperties.height)) {
-        frame.style.height = expandProperties.height + 'px';
-      }
-      if (!isNaN(expandProperties.width)) {
-        frame.style.width = expandProperties.width + 'px';
+
+      if(!expandProperties.interstitial) {
+        if (!isNaN(expandProperties.height)) {
+          frame.style.height = expandProperties.height + 'px';
+        }
+        if (!isNaN(expandProperties.width)) {
+          frame.style.width = expandProperties.width + 'px';
+        }
       }
     }
 
@@ -131,7 +134,7 @@ module.exports.placement = function (APPNEXUS) {
      */
     function removeOverlay(frame, expandProperties){
       if (frame.overlay) {
-        frame.overlay.remove();
+        frame.overlay.parentNode.removeChild(frame.overlay); //cross browser compatible way to remove element
         frame.overlay = null;
       }
     }
@@ -146,7 +149,7 @@ module.exports.placement = function (APPNEXUS) {
       switch(messageEvent.data.action) {
 
         case 'click':
-          topWindow.open(landingPageURL);
+          topWindow.open(landingPageURL, "_blank");  //leave this for backwards compatibility till next breaking change
           break;
 
         case 'set-expand-properties':
@@ -185,7 +188,12 @@ module.exports.placement = function (APPNEXUS) {
             expandFrame(astFrame, expandProperties);
           }
           break;
-
+        case 'ready':
+          var adData = {
+            landingPageUrl: landingPageURL
+          };
+          windowProxy.post({ action: 'setAdData', parameters: adData });
+          break;
         case 'collapse':
           if (expandProperties.interstitial) {
             removeOverlay(topFrame, expandProperties);
@@ -224,6 +232,7 @@ function AppNexusHTML5Lib ()  {
   var expandProperties = {}
   var dispatcher = new EventListener();
   var clientPorthole;
+  var adData = {};
 
   try {
     this.inFrame = (window.self !== window.top);
@@ -233,16 +242,41 @@ function AppNexusHTML5Lib ()  {
 
   dispatcher.addEventListener('ready', function () {
     if (readyCalled) {
-      clientPorthole = new Porthole.WindowProxy();
+      initPorthole();
       if (self.debug) console.info('Client initialized!');
     }
   });
+
+  /**
+   * Setup porthole so we can talk to our parent and listen to messages from it
+   */
+  var initPorthole = function(){
+    clientPorthole = new Porthole.WindowProxy();
+    clientPorthole.addEventListener(handleMessages);
+    clientPorthole.post({ action: 'ready'}); //notify parent we are ready
+  };
 
   var checkReady = function (f){ /in/.test(document.readyState) ? setTimeout(function () { checkReady(f); } , 9) : f(); }
   checkReady(function (){
     isPageLoaded = true;
     dispatcher.dispatchEvent('ready');
   });
+
+  var openUrl = function(url){
+    window.open(url, "_blank");
+  };
+
+  /**
+   * Listen to messages that come from the parent window
+   * @param messageEvent
+   */
+  var handleMessages = function(messageEvent){
+    switch(messageEvent.data.action) {
+      case 'setAdData':  //receive data about the ad
+        adData = messageEvent.data.parameters;
+        break;
+    }
+  };
 
   this.ready = function (callback) {
     if (!readyCalled) {
@@ -260,7 +294,7 @@ function AppNexusHTML5Lib ()  {
 
   this.click = function () {
     if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
-    clientPorthole.post({ action: 'click' });
+    openUrl(adData.landingPageUrl);
     if (self.debug) console.info('Client send action: click');
   }
 
@@ -289,7 +323,6 @@ function AppNexusHTML5Lib ()  {
 
   this.placement = host.placement(this);
 }
-
 
 var APPNEXUS = new AppNexusHTML5Lib();
 if (typeof window !== 'undefined') {

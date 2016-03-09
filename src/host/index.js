@@ -89,11 +89,14 @@ module.exports.placement = function (APPNEXUS) {
       if (expandProperties.expand && (expandProperties.expand.easing || expandProperties.expand.duration)) {
         addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 400, 10), expandProperties.expand.easing));
       }
-      if (!isNaN(expandProperties.height)) {
-        frame.style.height = expandProperties.height + 'px';
-      }
-      if (!isNaN(expandProperties.width)) {
-        frame.style.width = expandProperties.width + 'px';
+
+      if(!expandProperties.interstitial) {
+        if (!isNaN(expandProperties.height)) {
+          frame.style.height = expandProperties.height + 'px';
+        }
+        if (!isNaN(expandProperties.width)) {
+          frame.style.width = expandProperties.width + 'px';
+        }
       }
     }
 
@@ -130,7 +133,7 @@ module.exports.placement = function (APPNEXUS) {
      */
     function removeOverlay(frame, expandProperties){
       if (frame.overlay) {
-        frame.overlay.remove();
+        frame.overlay.parentNode.removeChild(frame.overlay); //cross browser compatible way to remove element
         frame.overlay = null;
       }
     }
@@ -145,7 +148,7 @@ module.exports.placement = function (APPNEXUS) {
       switch(messageEvent.data.action) {
 
         case 'click':
-          topWindow.open(landingPageURL);
+          topWindow.open(landingPageURL, "_blank");  //leave this for backwards compatibility till next breaking change
           break;
 
         case 'set-expand-properties':
@@ -184,7 +187,12 @@ module.exports.placement = function (APPNEXUS) {
             expandFrame(astFrame, expandProperties);
           }
           break;
-
+        case 'ready':
+          var adData = {
+            landingPageUrl: landingPageURL
+          };
+          windowProxy.post({ action: 'setAdData', parameters: adData });
+          break;
         case 'collapse':
           if (expandProperties.interstitial) {
             removeOverlay(topFrame, expandProperties);
