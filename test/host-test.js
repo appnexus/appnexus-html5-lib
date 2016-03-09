@@ -25,13 +25,13 @@ describe('appnexus-html5-lib host', function () {
     expect(el).to.be.ok;
   });
 
-  it('check host handles "click" event from client', function (done) {
+  it('check host does not handle "click" event from client', function (done) {
     var spy = sinon.spy(parentWindow, 'open');
 
     parentWindow.addEventListener('message', function () {
-      expect(spy.calledOnce).to.equal(true);
+      expect(spy.notCalled).to.equal(true);
       done();
-    })
+    });
 
     iframe.contentWindow.APPNEXUS.click();
   });
