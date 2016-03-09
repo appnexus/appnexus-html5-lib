@@ -90,11 +90,14 @@ module.exports.placement = function (APPNEXUS) {
       if (expandProperties.expand && (expandProperties.expand.easing || expandProperties.expand.duration)) {
         addCSSTranstions(frame, utils.sprintf('width, height, %sms %s', parseInt(expandProperties.expand.duration || 400, 10), expandProperties.expand.easing));
       }
-      if (!isNaN(expandProperties.height)) {
-        frame.style.height = expandProperties.height + 'px';
-      }
-      if (!isNaN(expandProperties.width)) {
-        frame.style.width = expandProperties.width + 'px';
+
+      if(!expandProperties.interstitial) {
+        if (!isNaN(expandProperties.height)) {
+          frame.style.height = expandProperties.height + 'px';
+        }
+        if (!isNaN(expandProperties.width)) {
+          frame.style.width = expandProperties.width + 'px';
+        }
       }
     }
 
