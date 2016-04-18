@@ -18,12 +18,20 @@ module.exports = function (grunt) {
       dist: ['build/*'],
     },
     browserify: {
-      build: {
+      host: {
         browserifyOptions: {
           debug: true,
           noParse: true
         },
-        src: ['src/index.js'],
+        src: ['src/host.js'],
+        dest: 'build/appnexus-html5-lib-host.js'
+      },
+      client: {
+        browserifyOptions: {
+          debug: true,
+          noParse: true
+        },
+        src: ['src/client.js'],
         dest: 'build/appnexus-html5-lib.js'
       }
     },
@@ -31,7 +39,11 @@ module.exports = function (grunt) {
       options: {
         banner: '/*\n * <%= pkg.description %>\n * Author: <%= pkg.author.name %> (<%= pkg.author.email %>) \n * Website: <%= pkg.author.url %>\n * <%= pkg.license %> Licensed.\n *\n * <%= pkg.name %> <%= pkg.version %>\n */\n '
       },
-      build: {
+      host: {
+        src: 'build/appnexus-html5-lib-host.js',
+        dest: 'build/appnexus-html5-lib-host.min.js'
+      },
+      client: {
         src: 'build/appnexus-html5-lib.js',
         dest: 'build/appnexus-html5-lib.min.js'
       },

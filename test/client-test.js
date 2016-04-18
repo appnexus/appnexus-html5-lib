@@ -7,7 +7,7 @@ describe('appnexus-html5-lib client', function () {
   var windowObject;
 
   beforeEach(function (done) {
-    jsdom.createPage(fixtures.HTML5_ADVERTISEMENT, [fixtures.LIB_SOURCE], function (window) {
+    jsdom.createPage(fixtures.HTML5_ADVERTISEMENT, [fixtures.LIB_SOURCE_CLIENT], function (window) {
       windowObject = window;
       done();
     });

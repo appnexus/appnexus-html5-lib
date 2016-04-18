@@ -1,12 +1,32 @@
 'use strict';
 
-var guid = require('../lib/guid');
-var utils = require('../lib/utils');
-var Porthole = require('../lib/porthole');
+var guid = require('./lib/guid');
+var utils = require('./lib/utils');
+var Porthole = require('./lib/porthole');
+var EventListener = require('./lib/event-listener');
+var host = require('./host');
 
-module.exports.placement = function (APPNEXUS) {
-  return function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
-    if (APPNEXUS.debug) console.info('Host placement created');
+function AppNexusHTML5Lib ()  {
+  var self = this;
+  this.debug = false;
+  this.inFrame = false;
+  this.EventListener = EventListener;
+
+  var isClient = false;
+  var readyCalled = false;
+  var isPageLoaded = false;
+  var expandProperties = {}
+  var dispatcher = new EventListener();
+  var clientPorthole;
+
+  try {
+    this.inFrame = (window.self !== window.top);
+  } catch (e) {
+    this.inFrame = true;
+  }
+
+  this.placement = function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
+    if (this.debug) console.info('Host placement created');
 
     var uid = guid();
     var usingAst = typeof inDapIF != 'undefined' && inDapIF;
@@ -55,7 +75,7 @@ module.exports.placement = function (APPNEXUS) {
           doc = frame.contentDocument;
         }
       } catch (e) {
-        if (APPNEXUS.debug) console.error('Error getting iframe document: ' + e);
+        if (this.debug) console.error('Error getting iframe document: ' + e);
       }
       return doc;
     }
@@ -210,4 +230,12 @@ module.exports.placement = function (APPNEXUS) {
     return document.getElementById('an-' + uid);
 
   }
-};
+}
+
+
+var APPNEXUS = new AppNexusHTML5Lib();
+if (typeof window !== 'undefined') {
+  window.APPNEXUS = APPNEXUS;
+}
+
+module.exports = APPNEXUS;

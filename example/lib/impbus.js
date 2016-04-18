@@ -34,8 +34,8 @@ module.exports = function (adsBasePath) {
           var clickTrack = 'http://' + request.headers.host + '/track?id=' + adId + '&r=' + encodeURIComponent(ad['landing-page']);
           response.write(' \
 (function () { document.write(\' \
-<script type="text/javascript" src="http://' + domain + ':8889/js/appnexus-html5-lib.js"></script> \
-<script type="text/javascript">APPNEXUS.placement("' + ad.url + '", "' + clickTrack + '", ' + adSize[0] + ', ' + adSize[1] + ');</script> \
+<script type="text/javascript" src="http://' + domain + ':8889/js/appnexus-html5-lib-host.js"></script> \
+<script type="text/javascript">APPNEXUS.debug = true; APPNEXUS.placement("' + ad.url + '", "' + clickTrack + '", ' + adSize[0] + ', ' + adSize[1] + ');</script> \
 \'); \
 })(); \
           ');
