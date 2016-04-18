@@ -12,6 +12,8 @@ var ADS_PATH = path.join(__dirname, 'advertiser');
 function serveAppNexusLib(request, response) {
   if (request.url === '/js/appnexus-html5-lib.js') {
     response.send(path.join(BUILD_DIR, 'appnexus-html5-lib.js'));
+  } else if (request.url === '/js/appnexus-html5-lib-host.js') {
+    response.send(path.join(BUILD_DIR, 'appnexus-html5-lib-host.js'));
   } else {
     request.next();
   }

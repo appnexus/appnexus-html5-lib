@@ -7,12 +7,12 @@ describe('appnexus-html5-lib host', function () {
   var parentWindow, iframe;
 
   beforeEach(function (done) {
-    jsdom.createPage(fixtures.HTML5_WEBPAGE, [fixtures.LIB_SOURCE], function (window) {
+    jsdom.createPage(fixtures.HTML5_WEBPAGE, [fixtures.LIB_SOURCE_HOST], function (window) {
       parentWindow = window;
       iframe = window.APPNEXUS.placement('about:blank', 'http://example.com', 300, 250);
       iframe.contentDocument.write(fixtures.HTML5_ADVERTISEMENT);
       iframe.contentWindow.name = iframe.name;
-      jsdom.injectScript(iframe.contentDocument, fixtures.LIB_SOURCE, function () {
+      jsdom.injectScript(iframe.contentDocument, fixtures.LIB_SOURCE_CLIENT, function () {
         iframe.contentWindow.APPNEXUS.ready(function () {
           done();
         });

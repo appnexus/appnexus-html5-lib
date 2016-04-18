@@ -2,8 +2,6 @@
 
 var Porthole = require('./lib/porthole');
 var EventListener = require('./lib/event-listener');
-var host = require('./host');
-
 
 function AppNexusHTML5Lib ()  {
   var self = this;
@@ -105,8 +103,6 @@ function AppNexusHTML5Lib ()  {
     clientPorthole.post({ action: 'collapse' });
     if (self.debug) console.info('Client send action: collapse');
   }
-
-  this.placement = host.placement(this);
 }
 
 var APPNEXUS = new AppNexusHTML5Lib();
