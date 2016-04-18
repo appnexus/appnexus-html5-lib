@@ -46,10 +46,6 @@ module.exports = function (grunt) {
       client: {
         src: 'build/appnexus-html5-lib.js',
         dest: 'build/appnexus-html5-lib.min.js'
-      },
-      minversion: {
-        src: 'build/appnexus-html5-lib.js',
-        dest: 'build/appnexus-html5-lib-<%= pkg.version %>.min.js'
       }
     },
     watch: {
@@ -62,5 +58,5 @@ module.exports = function (grunt) {
 
   //grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'concat', 'uglify']);
   grunt.registerTask('default', ['clean', 'browserify', 'watch']);
-  grunt.registerTask('build', ['clean', 'browserify', 'uglify:build', 'uglify:minversion']);
+  grunt.registerTask('build', ['clean', 'browserify', 'uglify:host', 'uglify']);
 };
