@@ -36,14 +36,17 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
-      options: {
-        banner: '/*\n * <%= pkg.description %>\n * Author: <%= pkg.author.name %> (<%= pkg.author.email %>) \n * Website: <%= pkg.author.url %>\n * <%= pkg.license %> Licensed.\n *\n * <%= pkg.name %> <%= pkg.version %>\n */\n '
-      },
       host: {
+        options: {
+          banner: '/*\n * <%= pkg.description %> for Host\n * Author: <%= pkg.author.name %> (<%= pkg.author.email %>) \n * Website: <%= pkg.author.url %>\n * <%= pkg.license %> Licensed.\n *\n * <%= pkg.name %>-host.min.js <%= pkg.version %>\n */\n '
+        },
         src: 'build/appnexus-html5-lib-host.js',
         dest: 'build/appnexus-html5-lib-host.min.js'
       },
       client: {
+        options: {
+          banner: '/*\n * <%= pkg.description %> for Client\n * Author: <%= pkg.author.name %> (<%= pkg.author.email %>) \n * Website: <%= pkg.author.url %>\n * <%= pkg.license %> Licensed.\n *\n * <%= pkg.name %>.min.js <%= pkg.version %>\n */\n '
+        },
         src: 'build/appnexus-html5-lib.js',
         dest: 'build/appnexus-html5-lib.min.js'
       }
