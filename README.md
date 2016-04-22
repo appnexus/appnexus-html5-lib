@@ -46,7 +46,10 @@ This will build three files, `appnexus-html5-lib.js`, `appnexus-html5-lib.min.js
 <br /><br />
 ## Deploying
 
-The appnexus-html-lib.min.js need to be placed on the CDN in a folder corresponding to its version number. for example `https://acdn.adnxs.com/html5-lib/0.0.3/appnexus-html5-lib.min.js`.
+Make sure to bump the version number in packages.json and then build.
+
+
+The appnexus-html-lib-host.min.js need to be placed on the CDN in a folder corresponding to its version number. for example `https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js`.
 
 The templates also need to be updated in both sand and prod using the `/template` API.
 
@@ -56,8 +59,7 @@ The templates also need to be updated in both sand and prod using the `/template
 http://sand.api.appnexus.com/template?id=1469
 {
 	"template": {
-		"id": 1469,
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib/0.0.3/appnexus-html5-lib.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
+		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
 	}
 }
 ```
@@ -65,8 +67,7 @@ http://sand.api.appnexus.com/template?id=1469
 http://sand.api.appnexus.com/template?id=1470
 {
 	"template": {
-		"id": 1470,
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib/0.0.3/appnexus-html5-lib.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
+		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
 	}
 }
 ```
@@ -74,8 +75,7 @@ http://sand.api.appnexus.com/template?id=1470
 http://sand.api.appnexus.com/template?id=1471
 {
 	"template": {
-		"id": 1471,
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib/0.0.3/appnexus-html5-lib.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
+		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
 	}
 }
 ```
@@ -85,8 +85,7 @@ http://sand.api.appnexus.com/template?id=1471
 http://api.appnexus.com/template?id=8606
 {
 	"template": {
-		"id": 8606,
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib/0.0.3/appnexus-html5-lib.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
+		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
 	}
 }
 ```
@@ -94,8 +93,7 @@ http://api.appnexus.com/template?id=8606
 http://api.appnexus.com/template?id=8607
 {
 	"template": {
-		"id": 8607,
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib/0.0.3/appnexus-html5-lib.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
+		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
 	}
 }
 ```
@@ -103,8 +101,7 @@ http://api.appnexus.com/template?id=8607
 http://api.appnexus.com/template?id=8608
 {
 	"template": {
-		"id": 8608,
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib/0.0.3/appnexus-html5-lib.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
+		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
 	}
 }
 ```
