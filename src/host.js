@@ -26,7 +26,7 @@ function AppNexusHTML5Lib ()  {
   }
 
   this.placement = function (mediaURL, landingPageURL, creativeWidth, creativeHeight) {
-    if (this.debug) console.info('Host placement created');
+    if (self.debug) console.info('Host placement created');
 
     var uid = guid();
     var usingAst = typeof inDapIF != 'undefined' && inDapIF;
@@ -75,7 +75,7 @@ function AppNexusHTML5Lib ()  {
           doc = frame.contentDocument;
         }
       } catch (e) {
-        if (this.debug) console.error('Error getting iframe document: ' + e);
+        if (self.debug) console.error('Error getting iframe document: ' + e);
       }
       return doc;
     }
