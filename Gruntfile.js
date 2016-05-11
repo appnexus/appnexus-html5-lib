@@ -15,40 +15,25 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     clean: {
-      dist: ['build/*'],
+      dist: ['dist/*'],
     },
     browserify: {
-      host: {
-        browserifyOptions: {
-          debug: true,
-          noParse: true
-        },
-        src: ['src/host.js'],
-        dest: 'build/appnexus-html5-lib-host.js'
-      },
       client: {
         browserifyOptions: {
           debug: true,
           noParse: true
         },
         src: ['src/client.js'],
-        dest: 'build/appnexus-html5-lib.js'
+        dest: 'dist/<%= pkg.name %>.js'
       }
     },
     uglify: {
-      host: {
-        options: {
-          banner: '/*\n * <%= pkg.description %> for Host\n * Author: <%= pkg.author.name %> (<%= pkg.author.email %>) \n * Website: <%= pkg.author.url %>\n * <%= pkg.license %> Licensed.\n *\n * <%= pkg.name %>-host.min.js <%= pkg.version %>\n */\n '
-        },
-        src: 'build/appnexus-html5-lib-host.js',
-        dest: 'build/appnexus-html5-lib-host.min.js'
-      },
       client: {
         options: {
           banner: '/*\n * <%= pkg.description %> for Client\n * Author: <%= pkg.author.name %> (<%= pkg.author.email %>) \n * Website: <%= pkg.author.url %>\n * <%= pkg.license %> Licensed.\n *\n * <%= pkg.name %>.min.js <%= pkg.version %>\n */\n '
         },
-        src: 'build/appnexus-html5-lib.js',
-        dest: 'build/appnexus-html5-lib.min.js'
+        src: 'dist/<%= pkg.name %>.js',
+        dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
     watch: {
@@ -61,5 +46,5 @@ module.exports = function (grunt) {
 
   //grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'concat', 'uglify']);
   grunt.registerTask('default', ['clean', 'browserify', 'watch']);
-  grunt.registerTask('build', ['clean', 'browserify', 'uglify:host', 'uglify']);
+  grunt.registerTask('build', ['clean', 'browserify', 'uglify']);
 };

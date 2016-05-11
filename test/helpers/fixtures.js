@@ -1,10 +1,10 @@
 var fs = require('fs');
 var path = require('path');
-var libSourceHost = fs.readFileSync(path.resolve(__dirname, '../../build/appnexus-html5-lib-host.js'), 'utf-8');
-var libSourceClient = fs.readFileSync(path.resolve(__dirname, '../../build/appnexus-html5-lib.js'), 'utf-8');
+var libSourceHost = fs.readFileSync(path.resolve(__dirname, '../../dist/appnexus-html5-lib-host.js'), 'utf-8');
+var libSourceClient = fs.readFileSync(path.resolve(__dirname, '../../dist/appnexus-html5-lib.js'), 'utf-8');
 
-if (!libSourceHost) throw new Error('Unable to load "' + path.resolve(__dirname, '../../build/appnexus-html5-lib-host.js') + '"')
-if (!libSourceClient) throw new Error('Unable to load "' + path.resolve(__dirname, '../../build/appnexus-html5-lib.js') + '"')
+if (!libSourceHost) throw new Error('Unable to load "' + path.resolve(__dirname, '../../dist/appnexus-html5-lib-host.js') + '"')
+if (!libSourceClient) throw new Error('Unable to load "' + path.resolve(__dirname, '../../dist/appnexus-html5-lib.js') + '"')
 
 module.exports = {
   HTML5_WEBPAGE: '<html><head></head><body></body>',

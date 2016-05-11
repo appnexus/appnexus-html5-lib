@@ -1,6 +1,6 @@
 {
-  "name": "appnexus-html5-lib",
-  "description": "AppNexus HTML5 library",
+  "name": "appnexus-html5-client-lib",
+  "description": "AppNexus HTML5 Client Library",
   "version": "1.0.1",
   "main": "src/host.js",
   "author": {
