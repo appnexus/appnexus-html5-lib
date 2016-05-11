@@ -1,7 +1,7 @@
 {
   "name": "appnexus-html5-client-lib",
   "description": "AppNexus HTML5 Client Library",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "main": "src/host.js",
   "author": {
     "name": "Alejandro Gonzalez Sole",
