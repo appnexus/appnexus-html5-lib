@@ -1,0 +1,32 @@
+{
+  "ads": [
+    {
+      "id": 15,
+      "type":"standard",
+      "path": "standard/index.html",
+      "url": "http://www.homedepot.com",
+      "size": "300x250"
+    },
+    {
+      "id": 18,
+      "type": "expanding-push",
+      "path": "expanding-push/index.html",
+      "url": "http://www.pictela.com",
+      "size": "728x90"
+    },
+    {
+      "id": 20,
+      "type": "expanding",
+      "path": "expanding/index.html",
+      "url": "https://www.youtube.com/watch?v=_I-6iy1wmtQ",
+      "size": "300x250"
+    },
+    {
+      "id": 13,
+      "type": "interstitial",
+      "path": "interstitial/index.html",
+      "url": "http://www.homedepot.com",
+      "size": "0x0"
+    }
+  ]
+}

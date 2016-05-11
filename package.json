@@ -8,10 +8,9 @@
     "email": "jgonzalezsole@appnexus.com",
     "url": "http://www.appnexus.com"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "grunt build",
-    "example": "node example/index.js",
     "watch": "grunt watch",
     "test": "grunt build; mocha --reporter spec"
   },
