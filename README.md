@@ -1,10 +1,10 @@
-# AppNexus HTML5 Library
+# AppNexus HTML5 Client Library
 
-The AppNexus HTML5 library helps integrate HTML5 ads into websites in a safe and secure manner.
+The AppNexus HTML5 client library helps integrate HTML5 ads into websites in a safe and secure manner.
 
 ## Installation
 
-Run the following from the directory where you want the repo to liv in
+Run the following from the directory where you want the repo to live in
 
 ```
 git clone <this-repo-url> html5-lib
@@ -41,7 +41,7 @@ To build the minified version run:
 npm run build
 ```
 
-This will build three files, `appnexus-html5-lib.js`, `appnexus-html5-lib.min.js` and `appnexus-html5-lib-<version>.js`.
+This will build two files, `appnexus-html5-lib.js` and `appnexus-html5-lib.min.js`.
 
 <br /><br />
 ## Deploying
@@ -49,62 +49,10 @@ This will build three files, `appnexus-html5-lib.js`, `appnexus-html5-lib.min.js
 Make sure to bump the version number in packages.json and then build.
 
 
-The appnexus-html-lib-host.min.js need to be placed on the CDN in a folder corresponding to its version number. for example `https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js`.
+The appnexus-html-lib.min.js needs to be placed on the CDN in a folder corresponding to its version number. for example `https://acdn.adnxs.com/html5-lib/1.0.0/appnexus-html5-lib.min.js`.
 
 The templates also need to be updated in both sand and prod using the `/template` API.
 
-### Updating sand
-
-```
-http://sand.api.appnexus.com/template?id=1469
-{
-	"template": {
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
-	}
-}
-```
-```
-http://sand.api.appnexus.com/template?id=1470
-{
-	"template": {
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
-	}
-}
-```
-```
-http://sand.api.appnexus.com/template?id=1471
-{
-	"template": {
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
-	}
-}
-```
-
-### Updating prod
-```
-http://api.appnexus.com/template?id=8606
-{
-	"template": {
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
-	}
-}
-```
-```
-http://api.appnexus.com/template?id=8607
-{
-	"template": {
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
-	}
-}
-```
-```
-http://api.appnexus.com/template?id=8608
-{
-	"template": {
-		"content_js": "document.write('<scr'+'ipt type=\"text/javascript\" src=\"https://acdn.adnxs.com/html5-lib-host/1.0.1/appnexus-html5-lib-host.min.js\"></scr'+'ipt><scr'+'ipt type=\"text/javascript\">APPNEXUS.placement(\"#{HTML5_INDEX_FILE}\", \"${CLICK_URL}\", ${CREATIVE_WIDTH}, ${CREATIVE_HEIGHT});</scr'+'ipt>'); /*${MEDIA_URL}*/"
-	}
-}
-```
 
 
 <br /><br />
