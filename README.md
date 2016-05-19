@@ -46,13 +46,16 @@ This will build two files, `appnexus-html5-lib.js` and `appnexus-html5-lib.min.j
 <br /><br />
 ## Deploying
 
-Make sure to bump the version number in packages.json and then build.
+For deploying run:
+
+```
+npm version [major|minor|patch]
+```
+
+This will build the library, test it, and create a tag with the new version if tests don't fail.
 
 
-The appnexus-html-lib.min.js needs to be placed on the CDN in a folder corresponding to its version number. for example `https://acdn.adnxs.com/html5-lib/1.0.0/appnexus-html5-lib.min.js`.
-
-The templates also need to be updated in both sand and prod using the `/template` API.
-
+The appnexus-html-lib.min.js needs to be placed on the CDN in a folder corresponding to its version number. for example `https://acdn.adnxs.com/html5-lib/1.0.0/appnexus-html5-lib.min.js`. Always use the version tag file under dist.
 
 
 <br /><br />
