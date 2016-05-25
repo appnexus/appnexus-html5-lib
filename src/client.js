@@ -16,6 +16,7 @@ function AppNexusHTML5Lib ()  {
   var dispatcher = new EventListener();
   var clientPorthole;
   var adData = {};
+  var clickTag = '';
 
   try {
     this.inFrame = (window.self !== window.top);
@@ -61,9 +62,16 @@ function AppNexusHTML5Lib ()  {
     }
   };
 
+  function getParameterByName(name) {
+    var match = RegExp('[?&]' + name +
+      '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+  }
+
   this.ready = function (callback) {
     if (!readyCalled) {
       readyCalled = true;
+      clickTag = getParameterByName('clickTag');
       self.debug = !self.inFrame;
       if (typeof callback === 'function') {
         dispatcher.addEventListener('ready', callback);
@@ -77,7 +85,7 @@ function AppNexusHTML5Lib ()  {
 
   this.click = function () {
     if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
-    openUrl(adData.landingPageUrl);
+    openUrl(clickTag);
     if (self.debug) console.info('Client send action: click');
   }
 
