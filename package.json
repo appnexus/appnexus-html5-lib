@@ -13,8 +13,8 @@
     "build": "grunt build",
     "watch": "grunt watch",
     "test": "grunt build && mocha --reporter spec",
-    "preversion": "npm run test && git add dist && git commit -m 'Rebuild library for release'",
-    "postversion": "git push origin master && git push --tags"
+    "preversion": "npm run test && git add dist && git checkout dist/",
+    "postversion": "npm run build && git add dist/ && git commit --amend && git push origin master && git push --tags || true"
   },
   "devDependencies": {
     "callsite": "^1.0.0",
