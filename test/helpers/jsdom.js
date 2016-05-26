@@ -1,11 +1,12 @@
 var jsdom = require('jsdom');
 
-jsdom.createPage = function  (html, scriptSources, callback) {
+jsdom.createPage = function  (url, html, scriptSources, callback) {
   if (typeof scriptSources === 'function' && callback === undefined) {
     callback = scriptSources
     scriptSources = undefined;
   }
   jsdom.env({
+    url: url,
     html: html,
     virtualConsole: jsdom.createVirtualConsole().sendTo(console),
     src: scriptSources,
