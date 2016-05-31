@@ -7,14 +7,22 @@ describe('appnexus-html5-lib client', function () {
   var windowObject;
 
   beforeEach(function (done) {
-    jsdom.createPage(fixtures.HTML5_ADVERTISEMENT, [fixtures.LIB_SOURCE_CLIENT], function (window) {
+    jsdom.createPage(fixtures.HTML5_ADVERTISEMENT_URL, fixtures.HTML5_ADVERTISEMENT, [fixtures.LIB_SOURCE_CLIENT], function (window) {
       windowObject = window;
       done();
     });
-  })
+  });
+
 
   it('triggered APPNEXUS.ready', function (done) {
     windowObject.APPNEXUS.ready(function () {
+      done();
+    });
+  });
+
+  it('gets correct clickTag from URL', function (done) {
+    windowObject.APPNEXUS.ready(function () {
+      expect(windowObject.APPNEXUS.getClickTag()).to.equal(fixtures.HTML5_CLICK_URL);
       done();
     });
   });

@@ -4,8 +4,7 @@
   "version": "1.2.0",
   "main": "src/client.js",
   "author": {
-    "name": "Alejandro Gonzalez Sole",
-    "email": "jgonzalezsole@appnexus.com",
+    "name": "AppNexus",
     "url": "http://www.appnexus.com"
   },
   "license": "Apache-2.0",

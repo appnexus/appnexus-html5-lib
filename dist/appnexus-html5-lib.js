@@ -72,7 +72,7 @@ function AppNexusHTML5Lib ()  {
   this.ready = function (callback) {
     if (!readyCalled) {
       readyCalled = true;
-      clickTag = getParameterByName('clickTag');
+      clickTag = this.getClickTag();
       self.debug = !self.inFrame;
       if (typeof callback === 'function') {
         dispatcher.addEventListener('ready', callback);
@@ -83,6 +83,10 @@ function AppNexusHTML5Lib ()  {
       }
     }
   }
+
+  this.getClickTag = function(){
+    return getParameterByName('clickTag');
+  };
 
   this.click = function () {
     if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');

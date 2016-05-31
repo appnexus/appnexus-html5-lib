@@ -216,6 +216,20 @@ Triggers the ad to collapse to the original size.
 
 
 <br /><br />
+### Method `APPNEXUS.getClickTag() : string`
+
+returns the current clickTag url passed to the creative.  This is useful for integration with other ad builders such as adobe edge.
+
+This function can be called before `APPNEXUS.ready` has fired.
+
+**Example usage**
+
+```
+var clickTag = APPNEXUS.getClickTag();
+```
+
+
+<br /><br />
 ## Running Example
 
 To run the examples, from the root folder type:
