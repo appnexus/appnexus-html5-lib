@@ -6,37 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HTML5 Intestitial 965x600 (Video)</title>
     <link rel="stylesheet" href="styles/style.css" />
-    <script type="text/javascript" src="/js/appnexus-html5-lib.min.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="/dist/appnexus-html5-lib.min.js"></script>
 </head>
 
 <body>
     <div id="container" class="centered">
-        <div id="banner">
-            <div id="video-container">
-                <video id="video" poster="images/poster.gif" autoplay>
-                    <source src="media/video.mp4" type="video/mp4">
-                    <source src="media/video.webm" type="video/webm">
-                    Your browser does not support the <code>video</code> element.
-                </video>
-            </div>
-
-            <div id="clickthrough"></div>
-
-            <div class="video-controls">
-                <div id="pause"></div>
-                <div id="play"></div>
-                <div id="unmute"></div>
-                <div id="mute"></div>
-                <div id="playpause"></div>
-                <div id="sound"></div>
-            </div>
-
-            <div id="footer" class="footer"></div>
-            <div id="logo" class="logo"></div>
-            <div id="close-btn" class="close-btn"></div>
+        <div class="logo">
+            <img src="images/an_logo.png" border="0">
+        </div>
+        <div class="tagline" id="tagline">
+            <span class="text">Powering</span>
+            <span class="text">the <strong>advertising</strong></span>
+            <span class="text">that powers</span>
+            <span class="text">the <strong>Internet</strong><span id="trademark">&trade;</span></span>
         </div>
     </div>
+    <script type="text/javascript">
+    APPNEXUS.ready(function () {
+
+      // request expand and overlay
+      APPNEXUS.setExpandProperties({
+        interstitial : true
+      });
+      APPNEXUS.expand();
+    });
+    </script> 
+
 </body>
 
 </html>
