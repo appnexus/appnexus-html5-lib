@@ -18,23 +18,23 @@ Add AppNexus' HTML5 JavaScript library to the ad's `index.html` file:
 ```
 
 ####Step 2:
-Add a unique id (such as "clickthrough") to the main container (for example: `<div class="container">`), or the `<body>`, of the ad.
+Add a unique id (such as "clickthrough") to the main container (for example: `<div class="container">`), or the `<body>`, of the ad
 
-_so this:_
+_so that this:_
 
 ```
 	<div class="container">
 ```
-_becomes_
+_becomes this_
 
 ```
 	<div class="container" id="clickthrough">
 ```
 
 ####Step 3:
-Ad a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
+Add a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
 
-Inside of the `<script>` tag, standard ads will make use of the `APPNEXUS.ready()` and `APPNEXUS.click()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
+Inside of the `<script>` tag you add, standard ads will make use of the `APPNEXUS.ready()` and `APPNEXUS.click()` functions (provided by the AppNexus HTML5 JavaScript library we added in Step 1) as such:
 
 ```	
 	...
@@ -49,6 +49,10 @@ Inside of the `<script>` tag, standard ads will make use of the `APPNEXUS.ready(
     </script>
     </body>
 ```
+
+__Brief Technical Explanation__
+
+`APPNEXUS.click()` is called inside the `addEventListener`'s callback function — in this case, this means that it happens when the user clicks on the `clickthrough` element.  This all takes place inside `APPNEXUS.ready()`— this means this only runs when the page is loaded and the HTML5 Library has loaded.
 
 See `README.md` for additional technical documentation on `APPNEXUS.ready()` and `APPNEXUS.click()`. 
 
@@ -79,16 +83,16 @@ _becomes_
 ```
 
 ####Step 3:
-Ad a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
+Add a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
 
-Inside of the `<script>` tag, you will make use of the `APPNEXUS.ready()`, and `APPNEXUS.expand()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
+Inside of the `<script>` tag, you will make use of the `APPNEXUS.ready()` and `APPNEXUS.expand()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
 
 ```	
 	...
   <script type="text/javascript">
       APPNEXUS.ready(function () {
         var isExpanded = false;
-        var expandingContainer = document.getElementById("expanding-container");
+        var expandingContainer = document.getElementById("container");
 
         expandingContainer.addEventListener("mouseover", function () {
           if (!isExpanded) { 
@@ -109,8 +113,11 @@ Inside of the `<script>` tag, you will make use of the `APPNEXUS.ready()`, and `
 </body>
 ```
 
+In this example, the lines `expandingContainer.style.height = 600;` and `expandingContainer.style.height = 248;` exist specifically to expand the ad (to `600px`) when it is moused over, and to collapse it (back to `248px`) when it is not.
 
-If you want to take advantage of the additional features offered in the function `APPNEXUS.setExpandProperties()` that allow you to animate the `<iframe>` that your ad will be contained in, you can do so as such:
+More broadly, these lines handle the animation of the ad. If the ad you're working with has its own animation code (and, since this section covers expandable ads, it likely does), then these specific lines are not necessary.
+
+Using `APPNEXUS.setExpandProperties()` is optional, but it allows you to animate the `<iframe>` that contains your ad.  You might want to do this to make your ad animate smoothly. If you want to take advantage of this feature, you can do so as such:
 
 ```	
 	...
@@ -149,6 +156,10 @@ If you want to take advantage of the additional features offered in the function
   </script>
 </body>
 ```
+__Brief Technical Explanation__
+
+`APPNEXUS.expand()` is called inside the `addEventListener`'s callback function — in this case, this means that it happens when the user mouses over or moves their mouse outside of the `clickthrough` element.  This all takes place inside `APPNEXUS.ready()`— this means this only runs when the page is loaded and the HTML5 Library has loaded.
+
 See `README.md` for additional technical documentation on `APPNEXUS.setExpandProperties()` and `APPNEXUS.expand()`. 
 
 ## Interstitial Ads
@@ -178,7 +189,7 @@ _becomes_
 ```
 
 ####Step 3:
-Ad a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
+Add a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
 
 Inside of the `<script>` tag, you will make use of the `APPNEXUS.setExpandProperties()` and `APPNEXUS.expand()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
 
@@ -196,4 +207,28 @@ Inside of the `<script>` tag, you will make use of the `APPNEXUS.setExpandProper
     </body>
 ```
 
-Since the interstitial is designed to occupy the entire device screen, the `APPNEXUS.expand()` function is called as soon as the page is deemed ready by `APPNEXUS.ready()`—it does not wait for a user event like a `click` or `mouseover`.
+If you have a close button on your interstitial ad, you can use `APPNEXUS.collapse()` to register that as such:
+
+```	
+	...
+    <script type="text/javascript">
+        APPNEXUS.ready(function () {
+          var closeButton = document.getElementById('close');
+        		closeButton.addEventListener("click", function () {
+          	APPNEXUS.collapse();
+	       });
+          APPNEXUS.setExpandProperties({
+    			interstitial : true
+  			});
+			APPNEXUS.expand();
+
+        });
+    </script>
+    </body>
+```
+
+__Brief Technical Explanation__
+
+`APPNEXUS.expand()` (and `APPNEXUS.collapse()`) is called  inside `APPNEXUS.ready()`— this means this only runs when the page is loaded and the HTML5 Library has loaded.m
+
+See `README.md` for additional technical documentation on `APPNEXUS.setExpandProperties()` and `APPNEXUS.expand()`. 
