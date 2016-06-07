@@ -22,7 +22,7 @@ Add AppNexus' HTML5 JavaScript library to the ad's `index.html` file:
 ```	
 	<head>
 		...
-		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.0.0/appnexus-html5-lib.min.js"></script>
+		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
 	</head>
 ```
 
