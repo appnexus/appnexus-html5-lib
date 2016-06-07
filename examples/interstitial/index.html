@@ -12,8 +12,13 @@
 
 <body>
     <div id="container" class="centered">
-        <div class="logo">
-            <img src="images/an_logo.png" border="0">
+        <div class="top-row">
+            <div class="logo">
+                <img src="images/an_logo.png" border="0">
+            </div>
+            <a class="close-button" id="close">
+                X
+            </a>
         </div>
         <div class="tagline" id="tagline">
             <span class="text">Powering</span>
@@ -24,12 +29,15 @@
     </div>
     <script type="text/javascript">
     APPNEXUS.ready(function () {
-
-      // request expand and overlay
-      APPNEXUS.setExpandProperties({
-        interstitial : true
-      });
-      APPNEXUS.expand();
+        var closeButton = document.getElementById('close');
+        closeButton.addEventListener("click", function () {
+            APPNEXUS.collapse();
+        });
+        // request expand and overlay
+        APPNEXUS.setExpandProperties({
+            interstitial : true
+        });
+        APPNEXUS.expand();
     });
     </script> 
 

@@ -6,20 +6,24 @@ body {
 #container {
     position: absolute;
     display: block;
-    width: 963px;
-    height: 598px;
     border-style:solid;
+    height: 90%;
     border-width: thin;
     background-color: black;
 }
 
+.centered {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
 .tagline {
-    margin-top: 250px;
-    margin-left: 600px;
-    margin-right: auto;
     padding: 0;
     position: relative;
-    width: 50%;
+    float: right;
 }
 .tagline .text {
     display: block;
@@ -35,129 +39,48 @@ body {
 strong {
     color: #FF8700;
 }
-.logo {
-    left: 0;
-    margin: 20px;
-    position: relative;
-}
 #trademark {
     color: #FF8700;
     font-size: 20px;
     vertical-align: top;
 }
-
-.centered {
-    position: absolute;
-    margin: auto;
-    top: 0;
+.top-row {
+    margin-bottom: 80px;
+}
+.logo {
     left: 0;
-    bottom: 0;
-    right: 0;
+    margin: 20px;
+    position: relative;
+    display: inline-block;
+}
+.close-button {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    float: right;
+    padding: 50px;
+    display: inline-block;
 }
 
-
-
-@media (max-height: 767px) and (min-width: 600px) and (min-height: 600px), (max-width: 767px) and (min-width: 600px) and (min-height: 600px) {
-	#container {
-        width: 763px;
-        height: 498px;
-    }
-
-    .video-controls {
-        top: 380px;
-        right: 90px;
-    }
-
-    .footer {
-        height: 78px;
-        background-size: 100% 100%;
-    }
-}
-
-
-@media (max-width: 1000px) and (max-height: 1000px) {
+@media (max-width: 1000px) {
     #container {
-        width: 763px;
-        height: 498px;
-    }
-
-    .video-controls {
-        top: 370px;
-        right: 90px;
-    }
-
-    .footer {
-        height: 78px;
-        background-size: 100% 100%;
+        width: 900px;
     }
 }
 
-/*GOOGLE NEXUS 7 LANDSCAPE*/
-@media (max-width: 960px) and (max-height: 600px) {
+
+@media (max-width: 768px) {
     #container {
-        width: 763px;
-        height: 408px;
+        width: 90%;
+    }
+    .logo > img {
+        width: 100px;
+    }
+    .tagline .text {
+        font-size: 30px;
+    }
+    .close-button {
+        font-size: 20px;
     }
 
-    .video-controls {
-        top: 270px;
-        right: 80px;
-    }
-
-    .footer {
-        height: 70px;
-        background-size: 100% 100%;
-    }
-}
-
-/*GOOGLE NEXUS 7 PORTRAIT*/
-@media (max-width: 600px) and (max-height: 960px) {
-    #container {
-        width: 563px;
-        height: 298px;
-    }
-
-    .video-controls {
-        top: 190px;
-        right: 40px;
-    }
-
-    .footer {
-        height: 50px;
-        background-size: 100% 100%;
-    }
-
-    .logo {
-        top: 10px;
-        left: 50px;
-        width: 144px;
-        height: 58px;
-        background-size: 100% 100%;
-    }
-
-    .close-btn {
-        top: 15px;
-        right: 45px;
-        width: 25px;
-        height: 25px;
-        background-size: 100% 100%;
-    }
-}
-
-/*IPAD PORTRAIT*/
-@media (width: 768px) and (height: 1024px) {
-    #container {
-        width: 663px;
-        height: 398px;
-    }
-
-    .video-controls {
-        top: 270px;
-        right: 80px;
-    }
-
-    .footer {
-        height: 70px;
-        background-size: 100% 100%;
-    }
 }
