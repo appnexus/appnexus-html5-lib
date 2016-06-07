@@ -78,7 +78,7 @@ _becomes_
 	<div class="container" id="clickthrough">
 ```
 
-####Step 3b:
+####Step 3:
 Ad a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
 
 Inside of the `<script>` tag, you will make use of the `APPNEXUS.ready()`, and `APPNEXUS.expand()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
@@ -177,7 +177,7 @@ _becomes_
 	<div class="container" id="clickthrough">
 ```
 
-####Step 3c:
+####Step 3:
 Ad a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
 
 Inside of the `<script>` tag, you will make use of the `APPNEXUS.setExpandProperties()` and `APPNEXUS.expand()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
