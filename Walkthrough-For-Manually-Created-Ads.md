@@ -1,20 +1,11 @@
-#Walkthrough for intergrating the AppNexus HTML5 Library with HTML5 creatives
+#Intergrating the AppNexus HTML5 Library with Manually Created HTML5 Ads
 
 ## Table of Contents
-- Ads created manually
-- Ads created in Google Web Designer
-- Ads created in Adobe Edge
-- Google Swiffy
+- Standard Ads
+- Expanding Ads
+- Interstitial Ads
 
-## Ads created manually
-
-####Before you begin:
-- Steps 1 and 2 must be followed for all ads
-- Pick the version of Step 3 that fits the type of ad you are working with:
-	- Step 3a is for __standard ads__ (this can be found in `/examples/standard`)
-	- Step 3b is for __expanding (or expanding push) ads__ (this can be found in `/examples/expanding` and `/examples/expanding-push`)
-	- Step 3c is for __interstitial ads__ (this can be found in `/examples/interstitial`)
-
+## Standard Ads
 ####Step 1:
 
 Add AppNexus' HTML5 JavaScript library to the ad's `index.html` file:
@@ -39,7 +30,8 @@ _becomes_
 ```
 	<div class="container" id="clickthrough">
 ```
-####Step 3a — standard ads :
+
+####Step 3:
 Ad a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
 
 Inside of the `<script>` tag, standard ads will make use of the `APPNEXUS.ready()` and `APPNEXUS.click()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
@@ -60,7 +52,33 @@ Inside of the `<script>` tag, standard ads will make use of the `APPNEXUS.ready(
 
 See `README.md` for additional technical documentation on `APPNEXUS.ready()` and `APPNEXUS.click()`. 
 
-####Step 3b — expanding or expanding-push ads:
+## Expanding Ads
+####Step 1:
+
+Add AppNexus' HTML5 JavaScript library to the ad's `index.html` file:
+
+```	
+	<head>
+		...
+		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+	</head>
+```
+
+####Step 2:
+Add a unique id (such as "clickthrough") to the main container (for example: `<div class="container">`), or the `<body>`, of the ad.
+
+_so this:_
+
+```
+	<div class="container">
+```
+_becomes_
+
+```
+	<div class="container" id="clickthrough">
+```
+
+####Step 3b:
 Ad a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
 
 Inside of the `<script>` tag, you will make use of the `APPNEXUS.ready()`, and `APPNEXUS.expand()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
@@ -133,7 +151,33 @@ If you want to take advantage of the additional features offered in the function
 ```
 See `README.md` for additional technical documentation on `APPNEXUS.setExpandProperties()` and `APPNEXUS.expand()`. 
 
-####Step 3c — interstitial ads :
+## Interstitial Ads
+####Step 1:
+
+Add AppNexus' HTML5 JavaScript library to the ad's `index.html` file:
+
+```	
+	<head>
+		...
+		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+	</head>
+```
+
+####Step 2:
+Add a unique id (such as "clickthrough") to the main container (for example: `<div class="container">`), or the `<body>`, of the ad.
+
+_so this:_
+
+```
+	<div class="container">
+```
+_becomes_
+
+```
+	<div class="container" id="clickthrough">
+```
+
+####Step 3c:
 Ad a script tag (`<script type="text/javascript">`) before the closing body tag (`</body>`).
 
 Inside of the `<script>` tag, you will make use of the `APPNEXUS.setExpandProperties()` and `APPNEXUS.expand()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
