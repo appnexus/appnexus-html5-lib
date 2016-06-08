@@ -91,7 +91,7 @@ In this first example, the lines `expandingContainer.style.height = 600;` and `e
 
 `APPNEXUS.setExpandProperties({
           height: 600
-        });` is used to change the height of the `<iframe>` that encloses the ad to a value that matches the final height of your ad.  If you do not do this, your expanded ad will be hidden behind the `<iframe>`. 
+        });` is used to change the `height` and/or `width` of the `<iframe>` that encloses the ad to a value that matches the final height of your ad.  If you do not do this, your expanded ad will be hidden behind the `<iframe>`. 
 
 Inside of the `<script>` tag, you will make use of the `APPNEXUS.ready()` and `APPNEXUS.expand()` functions provided by the AppNexus HTML5 JavaScript library we added in Step 1 as such:
 
