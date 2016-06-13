@@ -89,7 +89,7 @@ function AppNexusHTML5Lib ()  {
   };
 
   this.click = function () {
-    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
+    clickTag = this.getClickTag();
     openUrl(clickTag);
     if (self.debug) console.info('Client send action: click');
   }
