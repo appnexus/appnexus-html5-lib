@@ -48,7 +48,7 @@ Then, replace `"https://appnexus.com"` (including the quotation marks) with `APP
   <script type="text/javascript" gwd-events="handlers">
     gwd.auto_BodyClick = function(event) {
       // GWD Predefined Function
-      gwd.actions.gwdGenericad.exit('gwd-ad', 'APPNEXUS.getClickTag()', true);
+      gwd.actions.gwdGenericad.exit('gwd-ad', APPNEXUS.getClickTag(), true);
     };
   </script>
 ```
