@@ -52,3 +52,7 @@ Then, replace `"https://appnexus.com"` (including the quotation marks) with `APP
     };
   </script>
 ```
+
+###Step 4: Finish and Upload
+
+Then, ZIP the folder containing `index.html` and the rest of your ad's assets and upload it using the AppNexus Hosted HTML5 Creative Upload.
