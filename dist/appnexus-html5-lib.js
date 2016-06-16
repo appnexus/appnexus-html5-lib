@@ -90,6 +90,7 @@ function AppNexusHTML5Lib ()  {
 
   this.click = function () {
     clickTag = this.getClickTag();
+    if (!clickTag) console.log('No clickTag defined: click event will open a blank page');
     openUrl(clickTag);
     if (self.debug) console.info('Client send action: click');
   }
