@@ -10,4 +10,4 @@ Squashing commits is not mandatory, but can optionally be done to clean up Git h
 
 ## Raising Github Issues 
 
-If you are an external (non-AppNexus employee) contributor, feel free to create Github issuesâ€”the internal team will respond as soon as possible.
+If you are an external (non-AppNexus employee) contributor, feel free to create Github issues, and the internal team will respond as soon as possible.
