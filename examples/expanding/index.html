@@ -32,16 +32,21 @@
           height: 600,
           expand: {
             easing: 'ease-in-out',
-            duration: 2000
+            duration: 1000
           },
           collapse: {
             easing: 'ease-in-out',
-            duration: 1000
+            duration: 300
           }
+        });
+
+        expandingContainer.addEventListener("click", function() {
+          APPNEXUS.click();
         });
 
         expandingContainer.addEventListener("mouseover", function () {
           if (!isExpanded) { 
+            console.log("appnexus expanding");
             APPNEXUS.expand();
           }
           expandingContainer.style.height = 600;
@@ -52,9 +57,12 @@
 
         expandingContainer.addEventListener('mouseout', function() {
           if (isExpanded) {
+            console.log("appnexus collapsing");
             APPNEXUS.collapse();
             expandingContainer.style.height = 248;
             tagline.classList.remove("expandedTagline");
+
+            isExpanded = false;
           }
         });
       });

@@ -11,6 +11,8 @@
     height: 248px;
     width: 298px;
     border: 1px solid #666666;
+    cursor: pointer;
+
   }
   .tagline {
     margin: 20px;
