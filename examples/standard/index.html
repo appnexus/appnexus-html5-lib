@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -6,29 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HTML5 Standard: 300x250</title>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
-    <script data-source="js/libs/TweenMax.min.js" data-version="1.18.0" type="text/javascript" src="js/libs/TweenMax.min.js"></script>
-    <script type="text/javascript" src="/js/appnexus-html5-lib.min.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-</head>
+    <!-- Step 1. Add AppNexus' HTML5 javascript library. -->
+    <script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+    
+    <!-- End of Step 1. --></head>
 
 <body>
-    <div id="container">
-        <div id="ad" class="collapsed">
-            <div id="banner">
-                <div class="bg-collapse">
-                    <div class="product-details"></div>
-                    <div class="cta"></div>
-                    <div class="footer-text"></div>
-                </div>
-                <div class="tree">
-                    <div class="text-1"></div>
-                    <div class="text-2"></div>
-                </div>
-                <div class="footer-panel"></div>
-                <div id="clickthrough"></div>
-            </div>
+    <!-- Step 2. Add id="clickthrough" to the main container of the ad. Adding this to the body will also work. -->
+    <div class="container" id="clickthrough">
+    <!-- End of Step 2. -->
+    
+    
+        <div class="logo">
+            <img src="images/an_logo.png" border="0">
+        </div>
+        <div class="tagline" id="tagline">
+            <span class="text">Powering</span>
+            <span class="text">the <strong>advertising</strong></span>
+            <span class="text">that powers</span>
+            <span class="text">the <strong>Internet</strong><span id="trademark">&trade;</span></span>
         </div>
     </div>
+
+    <!-- Step 3. Add ready and click functions inside of a script tag before the close of the body tag. Note that it targets the id set in Step 2 (see getElementById). -->
+    <script type="text/javascript">
+        APPNEXUS.ready(function () {
+          var clickthrough = document.getElementById("clickthrough");
+
+          clickthrough.addEventListener("click", function () {
+            APPNEXUS.click();
+          });
+        });
+    </script>
 </body>
 
 </html>

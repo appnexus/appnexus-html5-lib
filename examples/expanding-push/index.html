@@ -1,27 +1,61 @@
 <html>
   <head>
-    <title>HTML5 Expanding 720x90</title>
-    <link rel="stylesheet" type="text/css" href="css/expand-style.css">
-    <script type="text/javascript" src="/js/appnexus-html5-lib.min.js"></script>
-    <script type="text/javascript" src="js/expand-code.js"></script>
-  </head>
+    <title>HTML5 Expanding Push 300x250</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Step 1. Add AppNexus' HTML5 javascript library. -->
+    <script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+    <!-- End of Step 1. -->  </head>
   <body>
-    <div id="expanding-div">
-      <div id="click-message">CLICK TO EXPAND</div>
-      <div id="click"></div>
-      <div id="video-holder">
-          <video id="video-player" poster="images/video_poster.jpg" controls="controls">
-            <!-- MP4 video file for Safari/iOS -->
-            <source src="media/sample-video.mp4" type='video/mp4' />
-            <!-- WEBM video for Chrome and Firefox 4+ -->
-            <source src="media/sample-video.webm" type='video/webm' />
-            <!-- Backup image for browsers that don't support the Video tag -->
-            <img src="images/video_poster.jpg" />
-          </video>
-      </div>
-      <img id="close-button" src="images/close-button.png" />
-      <img id="twitter-button" src="images/twitter-icon.png" />
-      <img id="facebook-button" src="images/facebook-icon.png" />
+  <!-- Step 2. Add id="clickthrough" to the main container of the ad. Adding this to the body will also work. -->
+  <div class="container expandable" id="expanding-container">
+  <!-- End of Step 2. -->
+    <div class="logo">
+      <img src="images/an_logo.png" border="0">
     </div>
+    <div class="tagline expandable" id="tagline">
+      <span class="text">Powering</span>
+      <span class="text">the <strong>advertising</strong></span>
+      <span class="text">that powers</span>
+      <span class="text">the <strong>Internet</strong><span id="trademark">&trade;</span></span>
+    </div>
+  </div>
+
+    <!-- Step 3. Add ready and click functions inside of a script tag before the close of the body tag. Note that it targets the id set in Step 2 (see getElementById). -->
+  <script type="text/javascript">
+      APPNEXUS.ready(function () {
+        var isExpanded = false;
+        var expandingContainer = document.getElementById("expanding-container");
+        var tagline = document.getElementById('tagline');
+
+        APPNEXUS.setExpandProperties({
+          height: 600,
+          expand: {
+            easing: 'ease-in-out',
+            duration: 2000
+          },
+          collapse: {
+            easing: 'ease-in-out',
+            duration: 1000
+          }
+        });
+
+        expandingContainer.addEventListener("click", function () {
+          if (!isExpanded) { 
+            APPNEXUS.expand();
+            expandingContainer.style.height = 600;
+            tagline.classList.add("expandedTagline");
+
+            isExpanded = true;
+          } else {
+            APPNEXUS.collapse();
+            expandingContainer.style.height = 248;
+            tagline.classList.remove("expandedTagline");
+            isExpanded = false;            
+          }
+        });
+
+      });
+  </script>
+
   </body>
 </html>

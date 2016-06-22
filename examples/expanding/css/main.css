@@ -1,0 +1,148 @@
+  body { 
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica,Arial,sans-serif;
+    text-align: center;
+    overflow:hidden;
+  }
+  .container {
+    overflow: hidden;
+    background-color: #000000;
+    height: 248px;
+    width: 298px;
+    border: 1px solid #666666;
+    cursor: pointer;
+  }
+  .tagline {
+    margin: 20px;
+    padding: 0;
+    position: relative;
+    bottom: -26px;
+  }
+  .tagline .text {
+    display: block;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 100;
+    text-align: left;
+    animation: fadein 2s;
+      -moz-animation: fadein 2s; /* Firefox */
+      -webkit-animation: fadein 2s; /* Safari and Chrome */
+      -o-animation: fadein 2s; /* Opera */
+  }
+  strong {
+    color: #FF8700;
+  }
+  .logo {
+    left: 0;
+    margin: 20px;
+    position: relative;
+  }
+  .logo img {
+    width: 115px;
+  }
+  .slinky {
+    left: 149px;
+    margin: 0;
+    position: absolute;
+    top: 1px;
+  }
+  .slinky img {
+    width: 150px;
+  }
+  #trademark {
+    color: #FF8700;
+    font-size: 20px;
+    vertical-align: top;
+  }
+  .expandedContainer {
+    animation: containerExpandDown 2s;
+    -moz-animation: containerExpandDown 2s;
+    -webkit-animation: containerExpandDown 2s;
+    -o-animation: containerExpandDown 2s;
+
+    height: 600px;
+  }
+  .expandedTagline {
+    animation: taglineExpandDown 2s;
+    -moz-animation: taglineExpandDown 2s;
+    -webkit-animation: taglineExpandDown 2s;
+    -o-animation: taglineExpandDown 2s;
+
+    bottom: -380px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      background-color: rgba(0,0,0,0.5); /*dim the background*/
+  }
+
+  .interstitial {
+    margin: 0 auto;
+    height: 480px;
+    width: 320px;
+  }
+
+  .interstitial .tagline {
+    bottom: -255px;
+  }
+
+  @keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+  }
+  @-moz-keyframes fadein { /* Firefox */
+      from {
+          opacity:0;
+      }
+      to {
+          opacity:1;
+      }
+  }
+  @-webkit-keyframes fadein { /* Safari and Chrome */
+      from {
+          opacity:0;
+      }
+      to {
+          opacity:1;
+      }
+  }
+  @-o-keyframes fadein { /* Opera */
+      from {
+          opacity:0;
+      }
+      to {
+          opacity: 1;
+      }
+  }
+
+  @keyframes containerExpandDown {
+    from {
+      height: 300px;
+    }
+    to {
+      height: 600px;
+    }
+  }
+
+  @keyframes taglineExpandDown {
+    from {
+      bottom: -76px;
+    }
+    to {
+      bottom: -380px;
+    }
+  }

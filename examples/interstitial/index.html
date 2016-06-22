@@ -4,39 +4,57 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HTML5 Intestitial 965x600 (Video)</title>
+    <title>HTML5 Interstitial 965x600</title>
     <link rel="stylesheet" href="styles/style.css" />
-    <script type="text/javascript" src="/js/appnexus-html5-lib.min.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-</head>
+    <!-- Step 1. Add AppNexus' HTML5 javascript library. -->
+    <script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+    <!-- End of Step 1. --></head>
 
 <body>
     <div id="container" class="centered">
-        <div id="banner">
-            <div id="video-container">
-                <video id="video" poster="images/poster.gif" autoplay>
-                    <source src="media/video.mp4" type="video/mp4">
-                    <source src="media/video.webm" type="video/webm">
-                    Your browser does not support the <code>video</code> element.
-                </video>
+        <div class="top-row">
+            <div class="logo">
+                <img src="images/an_logo.png" border="0">
             </div>
-
-            <div id="clickthrough"></div>
-
-            <div class="video-controls">
-                <div id="pause"></div>
-                <div id="play"></div>
-                <div id="unmute"></div>
-                <div id="mute"></div>
-                <div id="playpause"></div>
-                <div id="sound"></div>
-            </div>
-
-            <div id="footer" class="footer"></div>
-            <div id="logo" class="logo"></div>
-            <div id="close-btn" class="close-btn"></div>
+            <a class="close-button" id="close">
+                X
+            </a>
+        </div>
+        <div class="tagline" id="tagline">
+            <span class="text">Powering</span>
+            <span class="text">the <strong>advertising</strong></span>
+            <span class="text">that powers</span>
+            <span class="text">the <strong>Internet</strong><span id="trademark">&trade;</span></span>
         </div>
     </div>
+    <script type="text/javascript">
+    APPNEXUS.ready(function () {
+        var body = document.getElementsByTagName('body')[0];
+        body.addEventListener("click", function() {
+            APPNEXUS.collapse();
+        });
+        var closeButton = document.getElementById('close');
+        closeButton.addEventListener("click", function () {
+            APPNEXUS.collapse();
+            event.stopPropagation();
+        });
+        // request expand and overlay
+        APPNEXUS.setExpandProperties({
+            interstitial : true
+        });
+
+        var container = document.getElementById("container");
+
+        container.addEventListener("click", function () {
+            APPNEXUS.click();
+            event.stopPropagation();
+
+        });
+
+        APPNEXUS.expand();
+    });
+    </script> 
+
 </body>
 
 </html>
