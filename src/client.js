@@ -69,17 +69,14 @@ function AppNexusHTML5Lib ()  {
   }
 
   this.ready = function (callback) {
-    if (!readyCalled) {
-      clickTag = this.getClickTag();
-      self.debug = !self.inFrame;
-    }
-
     if (typeof callback === 'function') {
       dispatcher.addEventListener('ready', callback);
     }
 
     if (!readyCalled) {
       readyCalled = true;
+      clickTag = this.getClickTag();
+      self.debug = !self.inFrame;
       if (isPageLoaded) {
         dispatcher.dispatchEvent('ready');
       }
