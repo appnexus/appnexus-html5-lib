@@ -24,6 +24,8 @@ APPNEXUS.ready(function () {
 });
 ```
 
+The library also supports multiple `APPNEXUS.ready()` calls per page.
+
 <br /><br />
 ### Method `APPNEXUS.click([url]) : void`
 
