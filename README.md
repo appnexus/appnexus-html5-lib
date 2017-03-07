@@ -24,7 +24,45 @@ APPNEXUS.ready(function () {
 });
 ```
 
-The library also supports multiple `APPNEXUS.ready()` calls per page.
+#### Multiple `APPNEXUS.ready()` calls
+
+The library also supports multiple `APPNEXUS.ready()` calls per page.  You might want to do this if you have multiple functions that want to check if the APPNEXUS object is initialized and the page is loaded.
+
+`interaction.js`
+
+``` js
+APPNEXUS.ready(function () {
+  var readMoreButton = document.getElementById('read-more-button');
+
+  readMoreButton.addEventListener("click", function () {
+    APPNEXUS.click();
+  });
+});
+```
+
+`layout.js`
+
+``` js
+APPNEXUS.ready(function () {
+  var fullscreenButton = document.getElementById('fullscreen-button');
+
+  APPNEXUS.setExpandProperties({
+    width: 600,
+    height: 500,
+    floating: true,
+    expand: {
+      easing: 'ease-in-out',
+      duration: 1000
+    }
+  });
+
+  // Expands on click
+  fullscreenButton.addEventListener("hover", function () {
+   APPNEXUS.expand();
+  });
+});
+```
+
 
 <br /><br />
 ### Method `APPNEXUS.click([url]) : void`
