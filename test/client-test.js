@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 var jsdom = require('./helpers/jsdom');
 var sinon = require('sinon');
 var fixtures = require('./helpers/fixtures');
+var EventListener = require('../src/lib/event-listener');
 
 describe('appnexus-html5-lib client', function () {
   var windowObject;
@@ -82,4 +83,24 @@ describe('appnexus-html5-lib client', function () {
     });
   });
 
+  it('should return undefined for a non existing macro', function (done) {
+    windowObject.APPNEXUS.ready(function () {
+      expect(windowObject.APPNEXUS.getMacroByName("non_existing_macro")).to.equal(undefined)
+      done();
+    })
+  })
+
+  it('should call getMacroByName once when attempting to require a macro value', function (done) {
+    var macro = 'blah';
+    var spy = sinon.spy();
+    sinon.replace(windowObject.APPNEXUS, 'getMacroByName', spy);
+    
+    windowObject.APPNEXUS.ready(function () {
+      console.log(windowObject.APPNEXUS.getMacroByName(macro));
+      expect(spy.withArgs(macro).calledOnce).to.equal(true);
+      expect(spy.calledOnce).to.be.true;
+      sinon.restore();
+      done();
+    });
+  });
 });

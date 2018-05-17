@@ -117,6 +117,17 @@ function AppNexusHTML5Lib ()  {
     clientPorthole.post({ action: 'collapse' });
     if (self.debug) console.info('Client send action: collapse');
   }
+
+  this.getMacroByName = function (macro) {
+    if (!readyCalled || !clientPorthole) throw new Error('APPNEXUS library has not been initialized. APPNEXUS.ready() must be called first');
+    
+    if(adData && adData.macros && adData.macros[macro] !== undefined){
+      return adData.macros[macro];
+    }
+    else {
+      return undefined;
+    }
+  }
 }
 
 var APPNEXUS = new AppNexusHTML5Lib();
