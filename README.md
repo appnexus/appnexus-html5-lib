@@ -24,6 +24,46 @@ APPNEXUS.ready(function () {
 });
 ```
 
+#### Multiple `APPNEXUS.ready()` calls
+
+The library also supports multiple `APPNEXUS.ready()` calls per page.  You might want to do this if you have multiple functions that want to check if the APPNEXUS object is initialized and the page is loaded.
+
+`interaction.js`
+
+``` js
+APPNEXUS.ready(function () {
+  var readMoreButton = document.getElementById('read-more-button');
+
+  readMoreButton.addEventListener("click", function () {
+    APPNEXUS.click();
+  });
+});
+```
+
+`layout.js`
+
+``` js
+APPNEXUS.ready(function () {
+  var fullscreenButton = document.getElementById('fullscreen-button');
+
+  APPNEXUS.setExpandProperties({
+    width: 600,
+    height: 500,
+    floating: true,
+    expand: {
+      easing: 'ease-in-out',
+      duration: 1000
+    }
+  });
+
+  // Expands on click
+  fullscreenButton.addEventListener("hover", function () {
+   APPNEXUS.expand();
+  });
+});
+```
+
+
 <br /><br />
 ### Method `APPNEXUS.click([url]) : void`
 
@@ -171,6 +211,23 @@ This function can be called before `APPNEXUS.ready` has fired.
 var clickTag = APPNEXUS.getClickTag();
 ```
 
+<br /><br />
+### Method `APPNEXUS.getMacroByName(string) : string`
+
+returns the value of a given macro passed to the creative. This is useful for GDPR purposes.
+
+*NOTE: Only works the two `GDPR` macros.*
+
+**Example usage**
+
+```javascript
+ APPNEXUS.ready(function () {
+    clickthrough.addEventListener("click", function () {
+      APPNEXUS.getMacroByName("GDPR_APPLIES");
+      APPNEXUS.getMacroByName("GDPR_CONSENT_STRING");
+    });
+  });
+```
 
 <br /><br />
 ## Usage Documentation

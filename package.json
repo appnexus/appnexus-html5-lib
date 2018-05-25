@@ -1,7 +1,7 @@
 {
   "name": "appnexus-html5-lib",
   "description": "AppNexus HTML5 Client Library",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "src/client.js",
   "author": {
     "name": "AppNexus",
@@ -26,6 +26,6 @@
     "grunt-contrib-watch": "^0.6.1",
     "jsdom": "^7.2.2",
     "mocha": "*",
-    "sinon": "^1.17.2"
+    "sinon": "^5.0.7"
   }
 }

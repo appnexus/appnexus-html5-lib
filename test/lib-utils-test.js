@@ -10,9 +10,6 @@ describe('Util functions', function () {
 
     it('checks deepExtend works properly', function () {
     	var result = deepExtend({}, {'age': 3}, {'gender': 'male', 'father': {'age': 30, 'gender': 'male'}});
-    	expect(result).to.have.deep.property('age', 3);
-    	expect(result).to.have.deep.property('gender', 'male');
-    	expect(result).to.have.deep.property('father.age', 30);
-    	expect(result).to.have.deep.property('father.gender', 'male');
+        expect(result).to.deep.equal({ age: 3, gender: 'male', father: { age: 30, gender: 'male' } })
     });
 });
