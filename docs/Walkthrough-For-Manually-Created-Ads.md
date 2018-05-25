@@ -252,7 +252,7 @@ If you have a close button on your interstitial ad, you can use `APPNEXUS.collap
 			var closeButton = document.getElementById('close');
 			closeButton.addEventListener("click", function () {
 					APPNEXUS.collapse();
-			}
+			});
 			  		
 			APPNEXUS.setExpandProperties({
 				interstitial : true
