@@ -211,6 +211,23 @@ This function can be called before `APPNEXUS.ready` has fired.
 var clickTag = APPNEXUS.getClickTag();
 ```
 
+<br /><br />
+### Method `APPNEXUS.getMacroByName(string) : string`
+
+returns the value of a given macro passed to the creative. This is useful for GDPR purposes.
+
+*NOTE: Only works the two `GDPR` macros.*
+
+**Example usage**
+
+```javascript
+ APPNEXUS.ready(function () {
+    clickthrough.addEventListener("click", function () {
+      APPNEXUS.getMacroByName("GDPR_APPLIES");
+      APPNEXUS.getMacroByName("GDPR_CONSENT_STRING");
+    });
+  });
+```
 
 <br /><br />
 ## Usage Documentation
