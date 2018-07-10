@@ -27,7 +27,6 @@ function AppNexusHTML5Lib ()  {
 
   dispatcher.addEventListener('ready', function () {
     if (readyCalled) {
-      initPorthole();
       if (self.debug) console.info('Client initialized!');
     }
   });
@@ -44,7 +43,9 @@ function AppNexusHTML5Lib ()  {
   var checkReady = function (f){ /in/.test(document.readyState) ? setTimeout(function () { checkReady(f); } , 9) : f(); }
   checkReady(function (){
     isPageLoaded = true;
-    dispatcher.dispatchEvent('ready');
+    if (!!Object.keys(adData).length) {
+      dispatcher.dispatchEvent('ready');
+    }
   });
 
   var openUrl = function(url){
@@ -59,6 +60,9 @@ function AppNexusHTML5Lib ()  {
     switch(messageEvent.data.action) {
       case 'setAdData':  //receive data about the ad
         adData = messageEvent.data.parameters;
+        if (isPageLoaded) {
+          dispatcher.dispatchEvent('ready');
+        }
         break;
     }
   };
@@ -75,12 +79,10 @@ function AppNexusHTML5Lib ()  {
     }
 
     if (!readyCalled) {
+      initPorthole();
       readyCalled = true;
       clickTag = this.getClickTag();
       self.debug = !self.inFrame;
-      if (isPageLoaded) {
-        dispatcher.dispatchEvent('ready');
-      }
     }
   }
 
