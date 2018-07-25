@@ -62,5 +62,6 @@ This will build the library, test it, and create a tag with the new version if t
 
 The appnexus-html-lib.min.js needs to be placed on the CDN in a folder corresponding to its version number. for example `https://acdn.adnxs.com/html5-lib/1.0.0/appnexus-html5-lib.min.js`. Always use the version tag file under dist.
 
+Dont forget to update the examples to point to the latest tag been released.
 
 <br /><br />
