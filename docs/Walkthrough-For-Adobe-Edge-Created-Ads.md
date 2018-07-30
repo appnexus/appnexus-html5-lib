@@ -14,14 +14,14 @@ Then, look for and open the file named `index.html`. There will also be a file w
 
 <a name="standard-ads-step-1"></a>
 ###Step 2: Add the AppNexus HTML5 Library
-We will have to make sure the actual AppNexus HTML5 Library is linked to inside `index.html`.  The library can be found here: [https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js](https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js)
+We will have to make sure the actual AppNexus HTML5 Library is linked to inside `index.html`.  The library can be found here: [https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js](https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js)
 
 Linking the library in should be done inside the `<head>` tag in the `index.html` file, by adding the following `<script>` tag:
 
 ```html
 <head>
 	...
-    <script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+    <script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js"></script>
 </head>
 ```
 

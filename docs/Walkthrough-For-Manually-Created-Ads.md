@@ -11,14 +11,14 @@ All standard ads require a file called `index.html`. Each of the following steps
 
 ####Step 1: Add the AppNexus HTML5 Library
 
-You can find the AppNexus' HTML5 JavaScript library at this URL: [https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js](https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js).
+You can find the AppNexus' HTML5 JavaScript library at this URL: [https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js](https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js).
 
 You must add it to the ad's `index.html` file, inside the `<head>` tag, in a `<script>` tag like this:
 
 ```html	
 	<head>
 		...
-		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js"></script>
 	</head>
 ```
 
@@ -65,14 +65,14 @@ See `README.md` for additional technical documentation on `APPNEXUS.ready()` and
 All expanding ads require a file called `index.html`. Each of the following steps makes changes to that file.
 
 ####Step 1: Add the AppNexus HTML5 Library
-You can find the AppNexus' HTML5 JavaScript library at this URL: [https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js](https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js).
+You can find the AppNexus' HTML5 JavaScript library at this URL: [https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js](https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js).
 
 You must add it to the ad's `index.html` file, inside the `<head>` tag, in a `<script>` tag like this:
 
 ```html	
 	<head>
 		...
-		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js"></script>
 	</head>
 ```
 
@@ -200,14 +200,14 @@ See `README.md` for additional technical documentation on `APPNEXUS.setExpandPro
 All interstitial ads require a file called `index.html`. Each of the following steps makes changes to that file.
 
 ####Step 1: Add the AppNexus HTML5 Library
-You can find the AppNexus' HTML5 JavaScript library at this URL: [https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js](https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js).
+You can find the AppNexus' HTML5 JavaScript library at this URL: [https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js](https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js).
 
 You must add it to the ad's `index.html` file, inside the `<head>` tag, in a `<script>` tag like this:
 
 ```html	
 	<head>
 		...
-		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+		<script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js"></script>
 	</head>
 ```
 

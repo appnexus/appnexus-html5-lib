@@ -21,7 +21,7 @@ First, we will have to make sure the actual HTML5 Library is linked to inside `i
 ```html
   <head>
         ...
-        <script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.3.0/appnexus-html5-lib.min.js"></script>
+        <script type="text/javascript" src="https://acdn.adnxs.com/html5-lib/1.4.1/appnexus-html5-lib.min.js"></script>
   </head>
 ```
 
